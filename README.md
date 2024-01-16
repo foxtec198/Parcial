@@ -1,0 +1,2 @@
+# AuthWA
+ Automação Whatsapp
