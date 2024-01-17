@@ -1,41 +1,7 @@
-from tkinter import *
-from tkinter import PhotoImage
 from parcial import Parcial
 from time import strftime as st, sleep
 from datetime import datetime as dt
-
-class FrontEnd:
-    def __init__(self):
-        self.win = Tk()
-        self.bg = '#333'
-        self.fg = '#fff'
-        self.win['bg'] = self.bg
-        self.win.resizable(False, False)
-        self.win.geometry('300x200')
-        self.widgets()
-        self.place_widgets()
-        self.win.mainloop()
-
-    def widgets(self):
-        self.lbl = Label(
-            self.win,
-            text='Digite em qual horario deseja iniciar o servidor!',
-            bg = self.bg, fg = self.fg
-        )
-        self.horaEnt = Entry(self.win)
-        self.btn = Button(
-            self.win,
-            text='INICIAR',
-            command=self.action,
-        )
-
-    def place_widgets(self):
-        self.lbl.place(x=20, y=50)
-        self.horaEnt.place(x=80, y=100)
-        self.btn.place(x= 120, y = 160)
-
-    def action(self):
-        b.play(self.horaEnt.get())
+from os import system
 
 class BackEnd:
     def __init__(self) -> None:
@@ -43,10 +9,11 @@ class BackEnd:
         self.horaInicioFixed = self.horaInicio
         self.horaFinal = 18
 
-    def play(self, ent):
+    def run(self):
+        ent = input('Horario: ')
         if ent != '':
             self.horaInicio = int(ent)
-            self.hash()
+        self.hash()
     
     def hash(self):
         while True:
@@ -57,7 +24,6 @@ class BackEnd:
             year = st('%Y')
             nameOfMonth = st('%h')
             now = st('%d/%m/%Y - %H:%M')
-            
             # MOZIN
             if horario == '08:30:00':
                 p.msg(nome='97908929', mensagem='''Bom diaaaaa meu amor, meu tudo 🥰❤
@@ -123,7 +89,11 @@ class BackEnd:
             if self.horaInicio > 23:
                 self.horaInicio = self.horaInicioFixed
 
+            else:
+                print(st('%X'))
+                sleep(1)
+                system('cls')
+
 if __name__ == '__main__':
     p = Parcial()
-    b = BackEnd()
-    FrontEnd()
+    BackEnd().run()
