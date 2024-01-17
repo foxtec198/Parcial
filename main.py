@@ -124,6 +124,6 @@ class BackEnd:
                 self.horaInicio = self.horaInicioFixed
 
 if __name__ == '__main__':
-    FrontEnd()
     p = Parcial()
     b = BackEnd()
+    FrontEnd()
