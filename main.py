@@ -1,53 +1,42 @@
-from textual.app import App
-from textual.widgets import Button, Input, Label, Header, Footer
-from textual.containers import Container
+from tkinter import *
+from tkinter import PhotoImage
 from parcial import Parcial
-import sys
-from time import strftime as st
+from time import strftime as st, sleep
 from datetime import datetime as dt
 
-class WAuth(App):
-    BINDINGS = [('s ','sair()','Sair da Aplicação')]
-    CSS = """
-    Container{
-        width: 100%;
-        layout: vertical;
-        align: center middle;
-        text-align: center;
-    }
-    Label {
-        margin: 5 10;
-        text-align: center;
-        align: center middle;
-        width: 100%;
-    }
-    Input{
-        margin: 5 10;
-        width: 100%;
-    }
-    Button {
-        align: center middle;
-        width: 100%;
-        margin: 0 10;
-    }
-    """
-    def compose(self):
-        with Container():
-            yield Header(show_clock=True)
-            self.lbl = Label('Digite o horário que deseja iniciar os envios de parciais!', id = 'texto')
-            yield self.lbl
-            yield Input('08')
-            yield Button('Iniciar')
-            yield Footer()
-    def on_input_submittef(self, event):
-        b.play(event.input.value)
-        
-    def on_button_pressed(self, event):
-        self.lbl.update('PARCIAL EM EXECUÇÃO!')
+class FrontEnd:
+    def __init__(self):
+        self.win = Tk()
+        self.bg = '#333'
+        self.fg = '#fff'
+        self.win['bg'] = self.bg
+        self.win.resizable(False, False)
+        self.win.geometry('300x200')
+        self.widgets()
+        self.place_widgets()
+        self.win.mainloop()
 
-    def action_sair(self):
-        sys.exit()
-        
+    def widgets(self):
+        self.lbl = Label(
+            self.win,
+            text='Digite em qual horario deseja iniciar o servidor!',
+            bg = self.bg, fg = self.fg
+        )
+        self.horaEnt = Entry(self.win)
+        self.btn = Button(
+            self.win,
+            text='INICIAR',
+            command=self.action,
+        )
+
+    def place_widgets(self):
+        self.lbl.place(x=20, y=50)
+        self.horaEnt.place(x=80, y=100)
+        self.btn.place(x= 120, y = 160)
+
+    def action(self):
+        b.play(self.horaEnt.get())
+
 class BackEnd:
     def __init__(self) -> None:
         self.horaInicio = 8
@@ -57,6 +46,7 @@ class BackEnd:
     def play(self, ent):
         if ent != '':
             self.horaInicio = int(ent)
+            self.hash()
     
     def hash(self):
         while True:
@@ -67,7 +57,6 @@ class BackEnd:
             year = st('%Y')
             nameOfMonth = st('%h')
             now = st('%d/%m/%Y - %H:%M')
-            print(horario)
             
             # MOZIN
             if horario == '08:30:00':
@@ -135,6 +124,6 @@ class BackEnd:
                 self.horaInicio = self.horaInicioFixed
 
 if __name__ == '__main__':
+    FrontEnd()
     p = Parcial()
     b = BackEnd()
-    WAuth().run()
