@@ -156,7 +156,7 @@ class BackEnd:
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
                 
-                horaInicio += 1
+                self.horaInicio += 1
                 p.atalho('alt','tab')
             if self.horaInicio >= 19:
                 p.atalho('alt','tab')
@@ -216,7 +216,7 @@ class BackEnd:
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
 
-                horaInicio += 1
+                self.horaInicio += 1
                 p.atalho('alt','tab')
             # FINAL
             if self.horaInicio > 23:
