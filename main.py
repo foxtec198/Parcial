@@ -49,7 +49,7 @@ class BackEnd:
                     AND YEAR(T.Disponibilizacao) = {year}
                     GROUP BY T.[Status], T.Nome
                     ORDER BY T.[Status], [Total] DESC""")
-                    
+
                 #FIEP - JOSIEL
                 p.make(nome='Liderança GPS/FIEP',
                     legenda=f'Segue tarefas Realizadas/Abertas *FIEP* {now}',
@@ -158,7 +158,7 @@ class BackEnd:
                 
                 horaInicio += 1
                 p.atalho('alt','tab')
-            if horaInicio >= 19:
+            if self.horaInicio >= 19:
                 p.atalho('alt','tab')
                 #WITTUR
                 p.make(nome='Gps/Wittur Corporativo',
