@@ -26,9 +26,7 @@ class BackEnd:
             now = st('%d/%m/%Y - %H:%M')
             # MOZIN
             if horario == '08:30:00':
-                p.msg(nome='97908929', mensagem='''Bom diaaaaa meu amor, meu tudo 🥰❤
-        Não esqueça de pegar a aliança, de tomar seu café.
-        O ônibus passa *08:40* você tem 5min pra sair, se não ira perder o ônibus.''')
+                p.msg(nome='Meu Amor ', mensagem='''Bom diaaaaa meu amor, meu tudo 🥰❤ Não esqueça de pegar a aliança, de tomar seu café. O ônibus passa *08:40* você tem 5min pra sair, se não ira perder o ônibus.''')
             
             # DIURNO
             if hora == self.horaInicio and hora <= 18:
@@ -51,6 +49,7 @@ class BackEnd:
                     AND YEAR(T.Disponibilizacao) = {year}
                     GROUP BY T.[Status], T.Nome
                     ORDER BY T.[Status], [Total] DESC""")
+                    
                 #FIEP - JOSIEL
                 p.make(nome='Liderança GPS/FIEP',
                     legenda=f'Segue tarefas Realizadas/Abertas *FIEP* {now}',
@@ -82,8 +81,142 @@ class BackEnd:
                     and DAY(T.TerminoReal) = {day}
                     and MONTH(T.TerminoReal) = {month}
                     and YEAR(T.TerminoReal) = {year}""")
+                
+                # Visitas Mes
+                p.make(
+                    nome='GPS Vista - Projetos Londrina',
+                    legenda=f'Segue Visitas Realizas Mes de {nameOfMonth}',
+                    consulta=f"""
+                    select R.Nome as Sup, COUNT(R.Nome)  as Realizado
+                    from Tarefa T
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura Es on Es.Id_Estrutura = T.EstruturaId
+                    inner join dw_vista.dbo.DM_CR c on c.Id_cr = Es.Id_cr
+                    where c.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
+                    and T.Nome LIKE '%Visita %' 
+                    and month(Disponibilizacao) = {month}
+                    and YEAR(T.Disponibilizacao) = {year}
+                    GROUP BY R.Nome
+                    ORDER BY COUNT(R.Nome) DESC""")
+                
+                # WITTUR
+                p.make(nome='Gps/Wittur Corporativo',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 11880
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True)
+                
+                #LOGGI
+                p.make(nome='Gps/ loggi',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 24158
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True
+                    )
+                
+                #LONGPING
+                p.make(nome='Longping - GPS',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 42610
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True)
+                
+                # M DIAS
+                p.make(nome='Seg Patrimonial Paraná',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 15073
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True)
+                
+                horaInicio += 1
+                p.atalho('alt','tab')
+            if horaInicio >= 19:
+                p.atalho('alt','tab')
+                #WITTUR
+                p.make(nome='Gps/Wittur Corporativo',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 11880
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True)
 
-                self.horaInicio += 1
+                #LOGGI
+                p.make(nome='Gps/ loggi',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 24158
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True)
+
+                #LONGPING
+                p.make(nome='Longping - GPS',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 42610
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True)
+                
+                # M DIAS
+                p.make(nome='Seg Patrimonial Paraná',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 15073
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True)
+
+                horaInicio += 1
                 p.atalho('alt','tab')
             # FINAL
             if self.horaInicio > 23:
