@@ -56,7 +56,7 @@ class Parcial():
         system(f'explorer {self.caminho}')
         sleep(7)
         self.atalho('ctrl','c')
-        self.atalho('ctrl','w')
+        self.atalho('alt','tab')
         sleep(2)
         self.atalho('ctrl','v')
         sleep(5)
@@ -67,6 +67,8 @@ class Parcial():
         self.atalho('ctrl','f')
         self.atalho('ctrl','a')
         pg.press('backspace')
+        self.atalho('alt','tab')
+        self.atalho('ctrl','w')
 
     def png(self, consulta, nomeArquivo):
         self.nomeArquivo = f"dist/{nomeArquivo}"
