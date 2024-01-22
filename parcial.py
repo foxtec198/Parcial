@@ -60,7 +60,7 @@ class Parcial():
         self.atalho('ctrl','1')
         sleep(5)
         self.atalho('ctrl','v')
-        sleep(2)
+        sleep(5)
         self.cola(legenda)
         sleep(1)
         pg.press('Enter')
