@@ -58,7 +58,7 @@ class Parcial():
         self.atalho('ctrl','c')
         self.atalho('ctrl','w')
         self.atalho('ctrl','1')
-        sleep(2)
+        sleep(5)
         self.atalho('ctrl','v')
         sleep(2)
         self.cola(legenda)
