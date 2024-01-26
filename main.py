@@ -26,7 +26,7 @@ class BackEnd:
             now = st('%d/%m/%Y - %H:%M')
             # MOZIN
             if horario == '08:30:00':
-                p.msg(nome='Meu Amor ', mensagem='''Bom diaaaaa meu amor, meu tudo 🥰❤ Não esqueça de pegar a aliança, de tomar seu café. O ônibus passa *08:40* você tem 5min pra sair, se não ira perder o ônibus.''')
+                p.msg(nome='Meu Amor ❤❤❤', mensagem='''Bom diaaaaa meu amor, meu tudo 🥰❤ Não esqueça de pegar a aliança, de tomar seu café. O ônibus passa *08:40* você tem 5min pra sair, se não ira perder o ônibus.''')
             
             # DIURNO
             if hora == self.horaInicio and hora <= 18:
@@ -156,9 +156,9 @@ class BackEnd:
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
                 
-                self.horaInicio += 1
                 p.atalho('alt','tab')
-            if self.horaInicio >= 19:
+                self.horaInicio += 1
+            if hora == self.horaInicio and hora >= 19:
                 p.atalho('alt','tab')
                 #WITTUR
                 p.make(nome='Gps/Wittur Corporativo',
