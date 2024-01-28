@@ -4,10 +4,10 @@ from datetime import datetime as dt
 from os import system
 
 class BackEnd:
-    def __init__(self) -> None:
-        self.horaInicio = 8
+    def __init__(self, **config) -> None:
+        self.horaInicio = config['hora_de_inicio']
+        self.horaFinal = config['hora_final']
         self.horaInicioFixed = self.horaInicio
-        self.horaFinal = 18
 
     def run(self):
         ent = input('Horario: ')
@@ -35,9 +35,7 @@ class BackEnd:
                 p.make(nome='ENCARREGADAS GPS',
                     legenda=f'Segue realizado até o momento {now} - *FIEP*',
                     consulta=f"""SELECT
-                    (CASE WHEN T.Status = 10 THEN 'ABERTA' ELSE
-                    (CASE WHEN T.Status = 85 THEN 'FINALIZADA' ELSE
-                    (CASE WHEN T.Status = 25 THEN 'INICIADA' END) END) END) as 'status',
+                    6
                     T.Nome, 
                     COUNT(T.Nome) as 'Total'
                     FROM Tarefa T
@@ -219,7 +217,7 @@ class BackEnd:
                 self.horaInicio += 1
                 p.atalho('alt','tab')
             # FINAL
-            if self.horaInicio > 23:
+            if self.horaInicio > self.horaFinal:
                 self.horaInicio = self.horaInicioFixed
 
             else:
