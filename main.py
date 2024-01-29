@@ -1,10 +1,9 @@
 from parcial import Parcial
 from time import strftime as st, sleep
-from datetime import datetime as dt
 from os import system
 
 class BackEnd:
-    def __init__(self, **config) -> None:
+    def __init__(self, **config):
         self.horaInicio = config['hora_de_inicio']
         self.horaFinal = config['hora_final']
         self.horaInicioFixed = self.horaInicio
@@ -156,6 +155,7 @@ class BackEnd:
                 
                 p.atalho('alt','tab')
                 self.horaInicio += 1
+
             if hora == self.horaInicio and hora >= 19:
                 p.atalho('alt','tab')
                 #WITTUR
@@ -216,8 +216,9 @@ class BackEnd:
 
                 self.horaInicio += 1
                 p.atalho('alt','tab')
+                
             # FINAL
-            if self.horaInicio > self.horaFinal:
+            if hora == self.horaFinal:
                 self.horaInicio = self.horaInicioFixed
 
             else:
@@ -227,4 +228,4 @@ class BackEnd:
 
 if __name__ == '__main__':
     p = Parcial()
-    BackEnd().run()
+    BackEnd().run(8, 7)
