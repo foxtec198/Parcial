@@ -3,9 +3,9 @@ from time import strftime as st, sleep
 from os import system
 
 class BackEnd:
-    def __init__(self, *config):
-        self.horaInicio = config[0]
-        self.horaFinal = config[1]
+    def __init__(self):
+        self.horaInicio = 8
+        self.horaFinal = 7
         self.horaInicioFixed = self.horaInicio
 
     def run(self):
@@ -78,7 +78,6 @@ class BackEnd:
                     and DAY(T.TerminoReal) = {day}
                     and MONTH(T.TerminoReal) = {month}
                     and YEAR(T.TerminoReal) = {year}""")
-                
                 # Visitas Mes
                 p.make(
                     nome='GPS Vista - Projetos Londrina',
@@ -95,7 +94,6 @@ class BackEnd:
                     and YEAR(T.Disponibilizacao) = {year}
                     GROUP BY R.Nome
                     ORDER BY COUNT(R.Nome) DESC""")
-                
                 # WITTUR
                 p.make(nome='Gps/Wittur Corporativo',
                     legenda=f"Segue rondas realizadas até {now}",
@@ -109,7 +107,6 @@ class BackEnd:
                     and YEAR(TerminoReal) = {year}
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
-                
                 #LOGGI
                 p.make(nome='Gps/ loggi',
                     legenda=f"Segue rondas realizadas até {now}",
@@ -124,7 +121,6 @@ class BackEnd:
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True
                     )
-                
                 #LONGPING
                 p.make(nome='Longping - GPS',
                     legenda=f"Segue rondas realizadas até {now}",
@@ -138,7 +134,6 @@ class BackEnd:
                     and YEAR(TerminoReal) = {year}
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
-                
                 # M DIAS
                 p.make(nome='Seg Patrimonial Paraná',
                     legenda=f"Segue rondas realizadas até {now}",
@@ -171,7 +166,6 @@ class BackEnd:
                     and YEAR(TerminoReal) = {year}
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
-
                 #LOGGI
                 p.make(nome='Gps/ loggi',
                     legenda=f"Segue rondas realizadas até {now}",
@@ -185,7 +179,6 @@ class BackEnd:
                     and YEAR(TerminoReal) = {year}
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
-
                 #LONGPING
                 p.make(nome='Longping - GPS',
                     legenda=f"Segue rondas realizadas até {now}",
@@ -199,7 +192,6 @@ class BackEnd:
                     and YEAR(TerminoReal) = {year}
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
-                
                 # M DIAS
                 p.make(nome='Seg Patrimonial Paraná',
                     legenda=f"Segue rondas realizadas até {now}",
@@ -228,4 +220,4 @@ class BackEnd:
 
 if __name__ == '__main__':
     p = Parcial()
-    BackEnd().run(8, 7)
+    BackEnd().run()
