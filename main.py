@@ -3,9 +3,9 @@ from time import strftime as st, sleep
 from os import system
 
 class BackEnd:
-    def __init__(self, **config):
-        self.horaInicio = config['hora_de_inicio']
-        self.horaFinal = config['hora_final']
+    def __init__(self, *config):
+        self.horaInicio = config[0]
+        self.horaFinal = config[1]
         self.horaInicioFixed = self.horaInicio
 
     def run(self):
@@ -216,7 +216,7 @@ class BackEnd:
 
                 self.horaInicio += 1
                 p.atalho('alt','tab')
-                
+
             # FINAL
             if hora == self.horaFinal:
                 self.horaInicio = self.horaInicioFixed
