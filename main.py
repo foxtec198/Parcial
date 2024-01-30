@@ -100,7 +100,7 @@ class BackEnd:
                     legenda=f"Segue rondas realizadas até {now}",
                     consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
                     from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
                     where Es.CRNo = 24158
                     and DAY(TerminoReal) = {day}
@@ -115,7 +115,7 @@ class BackEnd:
                     legenda=f"Segue rondas realizadas até {now}",
                     consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
                     from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
                     where Es.CRNo = 42610
                     and DAY(TerminoReal) = {day}
@@ -129,7 +129,7 @@ class BackEnd:
                     legenda=f"Segue rondas realizadas até {now}",
                     consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
                     from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
                     where Es.CRNo = 15073
                     and DAY(TerminoReal) = {day}
@@ -143,7 +143,7 @@ class BackEnd:
                     legenda=f"Segue rondas realizadas até {now}",
                     consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
                     from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
                     where Es.CRNo = 35900
                     and DAY(TerminoReal) = {day}
@@ -163,7 +163,7 @@ class BackEnd:
                     legenda=f"Segue rondas realizadas até {now}",
                     consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
                     from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
                     where Es.CRNo = 24158
                     and DAY(TerminoReal) = {day}
@@ -176,7 +176,7 @@ class BackEnd:
                     legenda=f"Segue rondas realizadas até {now}",
                     consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
                     from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
                     where Es.CRNo = 42610
                     and DAY(TerminoReal) = {day}
@@ -189,7 +189,7 @@ class BackEnd:
                     legenda=f"Segue rondas realizadas até {now}",
                     consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
                     from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
                     where Es.CRNo = 15073
                     and DAY(TerminoReal) = {day}
@@ -202,7 +202,7 @@ class BackEnd:
                     legenda=f"Segue rondas realizadas até {now}",
                     consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
                     from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
                     where Es.CRNo = 35900
                     and DAY(TerminoReal) = {day}
