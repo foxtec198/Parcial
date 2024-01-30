@@ -47,7 +47,7 @@ class BackEnd:
                     AND MONTH(T.Disponibilizacao) = {month}
                     AND YEAR(T.Disponibilizacao) = {year}
                     GROUP BY T.[Status], T.Nome
-                    ORDER BY T.[Status], [Total] DESCC""")
+                    ORDER BY T.[Status], [Total] DESC""")
                 #FIEP - JOSIEL
                 p.make(nome='Liderança GPS/FIEP',
                     legenda=f'Segue tarefas Realizadas/Abertas *FIEP* {now}',
