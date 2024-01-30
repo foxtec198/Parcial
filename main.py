@@ -106,6 +106,7 @@ class BackEnd:
                     and DAY(TerminoReal) = {day}
                     and MONTH(TerminoReal) = {month}
                     and YEAR(TerminoReal) = {year}
+                    and R.Nome <> 'Sistema'
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True
                     )
@@ -119,6 +120,7 @@ class BackEnd:
                     where Es.CRNo = 42610
                     and DAY(TerminoReal) = {day}
                     and MONTH(TerminoReal) = {month}
+                    and R.Nome <> 'Sistema'
                     and YEAR(TerminoReal) = {year}
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
@@ -133,6 +135,21 @@ class BackEnd:
                     and DAY(TerminoReal) = {day}
                     and MONTH(TerminoReal) = {month}
                     and YEAR(TerminoReal) = {year}
+                    and R.Nome <> 'Sistema'
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True)
+                # CARGILL MARINGA 
+                p.make(nome='Cargill Maringá',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 35900
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    and R.Nome <> 'Sistema'
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
                 
@@ -180,7 +197,21 @@ class BackEnd:
                     and YEAR(TerminoReal) = {year}
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
-
+                # cargill maringa
+                p.make(nome='Cargill Maringá',
+                    legenda=f"Segue rondas realizadas até {now}",
+                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
+                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+                    where Es.CRNo = 35900
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    and R.Nome <> 'Sistema'
+                    GROUP BY T.Nome, T.Descricao, R.Nome
+                    ORDER BY [Total] DESC""", fimDeSemana=True)
+                
                 self.horaInicio += 1
                 p.atalho('alt','tab')
 
