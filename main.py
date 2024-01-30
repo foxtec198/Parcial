@@ -30,23 +30,24 @@ class BackEnd:
             # DIURNO
             if hora == self.horaInicio and hora <= 18:
                 p.atalho('alt','tab')
-                # FIEP - DENISE
+                #FIEP - DENISE
                 p.make(nome='ENCARREGADAS GPS',
                     legenda=f'Segue realizado até o momento {now} - *FIEP*',
                     consulta=f"""SELECT
-                    6
+                    (CASE WHEN T.Status = 10 THEN 'ABERTA' ELSE
+                    (CASE WHEN T.Status = 85 THEN 'FINALIZADA' ELSE
+                    (CASE WHEN T.Status = 25 THEN 'INICIADA' END) END) END) as 'status',
                     T.Nome, 
                     COUNT(T.Nome) as 'Total'
                     FROM Tarefa T
                     INNER JOIN Dw_vista.dbo.DM_ESTRUTURA ES ON ES.ID_ESTRUTURA = T.EstruturaId
-                    WHERE ES.CRNo = 13223           
+                    WHERE ES.CRNo = 13223
                     AND T.Nome LIKE '%INSPEÇÃO%'
                     AND DAY(T.Disponibilizacao) = {day}
                     AND MONTH(T.Disponibilizacao) = {month}
                     AND YEAR(T.Disponibilizacao) = {year}
                     GROUP BY T.[Status], T.Nome
-                    ORDER BY T.[Status], [Total] DESC""")
-
+                    ORDER BY T.[Status], [Total] DESCC""")
                 #FIEP - JOSIEL
                 p.make(nome='Liderança GPS/FIEP',
                     legenda=f'Segue tarefas Realizadas/Abertas *FIEP* {now}',
@@ -65,7 +66,7 @@ class BackEnd:
                     AND YEAR(T.Disponibilizacao) = {year}
                     GROUP BY T.[Status], T.Nome
                     ORDER BY T.[Status], [Total] DESC""")
-                # Visitas
+                #Visitas
                 p.make(nome='GPS Vista - Projetos Londrina',
                     legenda=f'Segue Visitas Realizadas Até o Momento - {now}',
                     consulta=f"""select R.Nome as 'Sup', Es.Nivel_03 as 'CR ', TerminoReal as 'Data de Finalização' 
@@ -78,7 +79,7 @@ class BackEnd:
                     and DAY(T.TerminoReal) = {day}
                     and MONTH(T.TerminoReal) = {month}
                     and YEAR(T.TerminoReal) = {year}""")
-                # Visitas Mes
+                #Visitas Mes
                 p.make(
                     nome='GPS Vista - Projetos Londrina',
                     legenda=f'Segue Visitas Realizas Mes de {nameOfMonth}',
@@ -94,19 +95,6 @@ class BackEnd:
                     and YEAR(T.Disponibilizacao) = {year}
                     GROUP BY R.Nome
                     ORDER BY COUNT(R.Nome) DESC""")
-                # WITTUR
-                p.make(nome='Gps/Wittur Corporativo',
-                    legenda=f"Segue rondas realizadas até {now}",
-                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
-                    from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
-                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
-                    where Es.CRNo = 11880
-                    and DAY(TerminoReal) = {day}
-                    and MONTH(TerminoReal) = {month}
-                    and YEAR(TerminoReal) = {year}
-                    GROUP BY T.Nome, T.Descricao, R.Nome
-                    ORDER BY [Total] DESC""", fimDeSemana=True)
                 #LOGGI
                 p.make(nome='Gps/ loggi',
                     legenda=f"Segue rondas realizadas até {now}",
@@ -153,19 +141,6 @@ class BackEnd:
 
             if hora == self.horaInicio and hora >= 19:
                 p.atalho('alt','tab')
-                #WITTUR
-                p.make(nome='Gps/Wittur Corporativo',
-                    legenda=f"Segue rondas realizadas até {now}",
-                    consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
-                    from Tarefa T with(nolock)
-                    inner join Recurso R on R.CodigoHash = T.CriadoPorHash
-                    inner join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
-                    where Es.CRNo = 11880
-                    and DAY(TerminoReal) = {day}
-                    and MONTH(TerminoReal) = {month}
-                    and YEAR(TerminoReal) = {year}
-                    GROUP BY T.Nome, T.Descricao, R.Nome
-                    ORDER BY [Total] DESC""", fimDeSemana=True)
                 #LOGGI
                 p.make(nome='Gps/ loggi',
                     legenda=f"Segue rondas realizadas até {now}",
