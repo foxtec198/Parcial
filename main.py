@@ -30,6 +30,21 @@ class BackEnd:
             # DIURNO
             if hora == self.horaInicio and hora <= 18:
                 p.atalho('alt','tab')
+                p.make(
+                    nome = 'GPS Vista - PR - Regional Denise' ,
+                    legenda= f'Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na {now}',
+                    consulta= '''
+                    select cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
+                    from Tarefa T with(nolock)
+                    inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+                    inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+                    where cr.GerenteRegional = 'denise dos santos dias silva'
+                    and T.Escalonado > 0
+                    and T.Status <> 85
+                    GROUP BY cr.Gerente, Es.Nivel_03
+                    ORDER BY cr.Gerente, [Escalonadas] DESC
+                    ''',
+                )
                 #FIEP - DENISE
                 p.make(nome='ENCARREGADAS GPS',
                     legenda=f'Segue realizado até o momento {now} - *FIEP*',
@@ -152,22 +167,6 @@ class BackEnd:
                     and R.Nome <> 'Sistema'
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
-                p.make(
-                    nome = 'GPS Vista - PR - Regional Denise' ,
-                    legenda= f'Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na {now}',
-                    consulta= '''
-                    select cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
-                    from Tarefa T with(nolock)
-                    inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
-                    inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-                    where cr.GerenteRegional = 'denise dos santos dias silva'
-                    and T.Escalonado > 0
-                    and T.Status <> 85
-                    GROUP BY cr.Gerente, Es.Nivel_03
-                    ORDER BY cr.Gerente, [Escalonadas] DESC
-                    ''',
-                    fimDeSemana=False
-                )
                 
                 p.atalho('alt','tab')
                 self.horaInicio += 1
