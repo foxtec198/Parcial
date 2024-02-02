@@ -134,7 +134,7 @@ class BackEnd:
                 # PRESENTEISMO BK
                 p.make(
                     nome='Alinhamentos BK - Londrina e Maringá 🍔',legenda='Segue Presenteismo Realizado!',
-                    consulta=f"""select T.Nome, R.Nome, T.TerminoReal as 'Data de Realização'
+                    consulta=f"""select Es.Descricao, R.Nome, T.TerminoReal as 'Data de Realização'
                     from Tarefa T with(nolock)
                     inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId

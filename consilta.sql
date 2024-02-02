@@ -63,17 +63,22 @@
 -- and MONTH(TerminoReal) = 02
 -- and YEAR(TerminoReal) = 2024
 
-select 
-Cliente,
-COUNT(Cliente) as 'Total'
-from Tarefa T with(nolock)
-inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
-inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-where cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
-and T.Nome = 'Visita Oper. Liderança'
-and MONTH(Disponibilizacao) = 02
-and YEAR(Disponibilizacao) = 2024
-and T.Status >= 10
-and T.Status <= 25
-GROUP BY Cliente
-ORDER BY [Total] DESC
+-- select 
+-- Cliente,
+-- COUNT(Cliente) as 'Total'
+-- from Tarefa T with(nolock)
+-- inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+-- inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+-- where cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
+-- and T.Nome = 'Visita Oper. Liderança'
+-- and MONTH(Disponibilizacao) = 02
+-- and YEAR(Disponibilizacao) = 2024
+-- and T.Status >= 10
+-- and T.Status <= 25
+-- GROUP BY Cliente
+-- ORDER BY [Total] 
+
+select top 1 T.Nome, E.Latitude, E.Longitude
+from Tarefa T 
+inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+inner join Execucao E on E.TarefaId = T.id
