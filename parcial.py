@@ -1,20 +1,20 @@
-from pyodbc import connect
 from time import sleep, strftime as st
 import pyautogui as pg 
 from pyperclip import copy
 from pandas import read_sql, DataFrame
 from dataframe_image import export
 from os import system, mkdir
+from sqlalchemy import create_engine
 
+engine = create_engine('mssql://guilherme.breve:84584608Guilherme@10.56.6.56/DW_Vista?driver=SQL Server')
 
-class Parcial():
+class Parcial:
     def __init__(self):
         pg.FAILSAFE = False
         pg.PAUSE = 1.5
         try: mkdir('dist')
         except: False
-        self.strConn = "DRIVER={SQL Server}; DATABASE=Vista_Replication_PRD; SERVER=10.56.6.56; UID=guilherme.breve; PWD=84584608Guilherme"
-        self.conn = connect(self.strConn)
+        self.conn = engine.connect()
 
     def make(self, nome, legenda, consulta, fimDeSemana=False, arquivo='img.png'):
         self.fds = st('%a')
