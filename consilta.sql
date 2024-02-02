@@ -10,12 +10,6 @@
 -- GROUP BY cr.Gerente, es.Nivel_03
 -- ORDER BY [Escalonadas] DESC
 
-
--- select T.Nome, T.Origem from Tarefa T
--- where T.Numero = 36806489
-
--- 30R,32F,48C
-
 -- select 
 -- T.Nome, R.Nome as 'Colaborador',
 -- (CASE WHEN T.Status = 10 THEN 'ABERTA' ELSE
@@ -47,11 +41,24 @@
 -- GROUP BY T.Nome, T.Descricao, R.Nome
 -- ORDER BY [Total] DESC
 
-set nocount on
-select cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
-from Tarefa T with(nolock)
-inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
-inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-where cr.GerenteRegional = 'denise dos santos dias silva'
-and T.Escalonado > 0
-and T.Status <> 85
+-- set nocount on
+-- select cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
+-- from Tarefa T with(nolock)
+-- inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+-- inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+-- where cr.GerenteRegional = 'denise dos santos dias silva'
+-- and T.Escalonado > 0
+-- and T.Status <> 85
+-- GROUP BY cr.Gerente, Es.Nivel_03
+-- ORDER BY cr.Gerente, [Escalonadas] DESC
+
+-- select T.Nome, R.Nome, T.TerminoReal as 'Data de Realização'
+-- from Tarefa T with(nolock)
+-- inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+-- inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+-- inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+-- where cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
+-- and T.Nome = 'TAREFA INICIAL BK'
+-- and DAY(TerminoReal) = 01
+-- and MONTH(TerminoReal) = 02
+-- and YEAR(TerminoReal) = 2024

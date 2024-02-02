@@ -23,13 +23,16 @@ class BackEnd:
             year = st('%Y')
             nameOfMonth = st('%h')
             now = st('%d/%m/%Y - %H:%M')
-            # MOZIN
-            if horario == '08:30:00':
-                p.msg(nome='Meu Amor ❤❤❤', mensagem='''Bom diaaaaa meu amor, meu tudo 🥰❤ Não esqueça de pegar a aliança, de tomar seu café. O ônibus passa *08:40* você tem 5min pra sair, se não ira perder o ônibus.''')
-            
+            # p.make(
+            #     nome='',legenda='',
+            #     consulta=""" 
+            #     """)
+
             # DIURNO
             if hora == self.horaInicio and hora <= 18:
+                sleep(2)
                 p.atalho('alt','tab')
+                # ESCALONADAS
                 p.make(
                     nome = 'GPS Vista - PR - Regional Denise' ,
                     legenda= f'Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na {now}',
@@ -43,7 +46,7 @@ class BackEnd:
                     and T.Status <> 85
                     GROUP BY cr.Gerente, Es.Nivel_03
                     ORDER BY cr.Gerente, [Escalonadas] DESC
-                    ''',
+                    ''', fimDeSemana=True,
                 )
                 #FIEP - DENISE
                 p.make(nome='ENCARREGADAS GPS',
@@ -81,7 +84,7 @@ class BackEnd:
                     AND YEAR(T.Disponibilizacao) = {year}
                     GROUP BY T.[Status], T.Nome
                     ORDER BY T.[Status], [Total] DESC""")
-                #Visitas
+                # VISITAS DIA
                 p.make(nome='GPS Vista - Projetos Londrina',
                     legenda=f'Segue Visitas Realizadas Até o Momento - {now}',
                     consulta=f"""select R.Nome as 'Sup', Es.Nivel_03 as 'CR ', TerminoReal as 'Data de Finalização' 
@@ -89,12 +92,12 @@ class BackEnd:
                     inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join DW_Vista.dbo.DM_Estrutura Es on Es.Id_Estrutura = T.EstruturaId
                     inner join DW_Vista.dbo.DM_CR cr on cr.Id_CR = Es.ID_Cr
-                    where T.Nome LIKE '%Visita%'
+                    where T.Nome LIKE '%Visita %'
                     and Cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
                     and DAY(T.TerminoReal) = {day}
                     and MONTH(T.TerminoReal) = {month}
                     and YEAR(T.TerminoReal) = {year}""")
-                #Visitas Mes
+                # VISITA MES
                 p.make(
                     nome='GPS Vista - Projetos Londrina',
                     legenda=f'Segue Visitas Realizas Mes de {nameOfMonth}',
@@ -106,10 +109,42 @@ class BackEnd:
                     inner join dw_vista.dbo.DM_CR c on c.Id_cr = Es.Id_cr
                     where c.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
                     and T.Nome LIKE '%Visita %' 
-                    and month(Disponibilizacao) = {month}
-                    and YEAR(T.Disponibilizacao) = {year}
+                    and month(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
                     GROUP BY R.Nome
                     ORDER BY COUNT(R.Nome) DESC""")
+                # VISITAS ABERTAS/INICIADAS
+                p.make(
+                    nome='GPS Vista - Projetos Londrina',
+                    legenda= 'Segue Visitas Operacionais *ABERTAS/INICIADAS* para este mês ! 🚧',
+                    consulta="""select 
+                    Es.Nivel_03 as 'CR', 
+                    Es.Descricao as 'Local Exato', 
+                    COUNT(Es.Descricao) as 'Total de Visitas Abertas'
+                    from Tarefa T with(nolock)
+                    inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+                    inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+                    where cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
+                    and T.Nome = 'Visita Oper. Liderança'
+                    and T.Status >= 10
+                    and T.Status <= 25
+                    GROUP BY Es.Nivel_03, Es.Descricao
+                    ORDER BY [Total de Visitas Abertas] DESC
+                    """)
+                # PRESENTEISMO BK
+                p.make(
+                    nome='',legenda='',
+                    consulta=f"""select T.Nome, R.Nome, T.TerminoReal as 'Data de Realização'
+                    from Tarefa T with(nolock)
+                    inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+                    inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+                    inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+                    where cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
+                    and T.Nome = 'TAREFA INICIAL BK'
+                    and DAY(TerminoReal) = {day}
+                    and MONTH(TerminoReal) = {month}
+                    and YEAR(TerminoReal) = {year}
+                    """)
                 #LOGGI
                 p.make(nome='Gps/ loggi',
                     legenda=f"Segue rondas realizadas até {now}",
@@ -212,7 +247,7 @@ class BackEnd:
                     and YEAR(TerminoReal) = {year}
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
-                # cargill maringa
+                # CARGILL MARINGA
                 p.make(nome='Cargill Maringá',
                     legenda=f"Segue rondas realizadas até {now}",
                     consulta=f"""select T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
