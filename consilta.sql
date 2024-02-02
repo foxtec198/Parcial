@@ -62,3 +62,18 @@
 -- and DAY(TerminoReal) = 01
 -- and MONTH(TerminoReal) = 02
 -- and YEAR(TerminoReal) = 2024
+
+select 
+Cliente,
+COUNT(Cliente) as 'Total'
+from Tarefa T with(nolock)
+inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+where cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
+and T.Nome = 'Visita Oper. Liderança'
+and MONTH(Disponibilizacao) = 02
+and YEAR(Disponibilizacao) = 2024
+and T.Status >= 10
+and T.Status <= 25
+GROUP BY Cliente
+ORDER BY [Total] DESC

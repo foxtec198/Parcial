@@ -117,20 +117,20 @@ class BackEnd:
                 p.make(
                     nome='GPS Vista - Projetos Londrina',
                     legenda= 'Segue Visitas Operacionais *ABERTAS/INICIADAS* para este mês ! 🚧',
-                    consulta="""select 
-                    Es.Nivel_03 as 'CR', 
-                    Es.Descricao as 'Local Exato', 
-                    COUNT(Es.Descricao) as 'Total de Visitas Abertas'
+                    consulta=f"""select 
+                    Cliente,
+                    COUNT(Cliente) as 'Total'
                     from Tarefa T with(nolock)
                     inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
                     inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
                     where cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
                     and T.Nome = 'Visita Oper. Liderança'
+                    and MONTH(Disponibilizacao) = 02
+                    and YEAR(Disponibilizacao) = 2024
                     and T.Status >= 10
                     and T.Status <= 25
-                    GROUP BY Es.Nivel_03, Es.Descricao
-                    ORDER BY [Total de Visitas Abertas] DESC
-                    """)
+                    GROUP BY Cliente
+                    ORDER BY [Total] DESC""")
                 # PRESENTEISMO BK
                 p.make(
                     nome='',legenda='',
