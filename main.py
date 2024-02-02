@@ -133,7 +133,7 @@ class BackEnd:
                     ORDER BY [Total] DESC""")
                 # PRESENTEISMO BK
                 p.make(
-                    nome='',legenda='',
+                    nome='Alinhamentos BK - Londrina e Maringá 🍔',legenda='Segue Presenteismo Realizado!',
                     consulta=f"""select T.Nome, R.Nome, T.TerminoReal as 'Data de Realização'
                     from Tarefa T with(nolock)
                     inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
