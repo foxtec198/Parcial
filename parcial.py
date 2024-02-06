@@ -1,4 +1,4 @@
-from time import sleep, strftime as st
+from time import sleep as sl, strftime as st
 import pyautogui as pg 
 from pyperclip import copy
 from pandas import read_sql, DataFrame
@@ -7,6 +7,10 @@ from os import system, mkdir
 from sqlalchemy import create_engine
 
 engine = create_engine('mssql://guilherme.breve:84584608Guilherme@10.56.6.56/Vista_Replication_PRD?driver=SQL Server')
+horaInicio = 8
+mudarTurno = 18
+horaFinal = 7
+horaInicioFixed = horaInicio
 
 class Parcial:
     def __init__(self):
@@ -15,6 +19,18 @@ class Parcial:
         try: mkdir('dist')
         except: False
         self.conn = engine.connect()
+        self.init()
+    
+    def sleep(self, x):
+        sl(x)
+        
+    def init(self):    
+        self.now = st('%d/%m/%Y - %H:%M')
+        self.day = st('%d')
+        self.month = st('%m')
+        self.year = st('%Y')
+        self.hora = int(st('%H'))
+        self.nameOfMonth = st('%h')
 
     def make(self, nome, legenda, consulta, fimDeSemana=False, arquivo='img.png'):
         self.fds = st('%a')
@@ -37,11 +53,11 @@ class Parcial:
                 
     def msg(self, nome, mensagem):
         self.atalho('alt','tab')
-        sleep(1)
+        sl(1)
         self.atalho('alt','k')
-        sleep(2)
+        sl(2)
         self.cola(nome)
-        sleep(2)
+        sl(2)
         pg.press('enter')
         self.cola(mensagem)
         pg.press('enter')
@@ -50,18 +66,18 @@ class Parcial:
     
     def envio(self, nome, legenda):
         self.atalho('ctrl','f')
-        sleep(1)
+        sl(1)
         self.cola(nome)
         self.atalho('ctrl','1')
         system(f'explorer {self.caminho}')
-        sleep(7)
+        sl(7)
         self.atalho('ctrl','c')
         self.atalho('alt','tab')
-        sleep(2)
+        sl(2)
         self.atalho('ctrl','v')
-        sleep(5)
+        sl(5)
         self.cola(legenda)
-        sleep(2)
+        sl(2)
         pg.press('Enter')
         pg.press('esc')
         self.atalho('ctrl','f')
@@ -84,3 +100,13 @@ class Parcial:
     def cola(self, msg):
         copy(msg)
         self.atalho('ctrl','v') 
+
+    def display(self):
+        print(st('%X'))
+        sl(1)
+        system('cls')
+    
+    def getHour(self):
+        ent = input('Horario: ')
+        if ent != '': return int(ent)
+        else: return 8

@@ -78,7 +78,53 @@
 -- GROUP BY Cliente
 -- ORDER BY [Total] 
 
-select top 1 T.Nome, E.Latitude, E.Longitude
-from Tarefa T 
+-- select  R.Nome, count(T.Nome) as 'Total de Visitas'
+-- from Tarefa T with(nolock)
+-- inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+-- inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+-- inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+-- where es.pecno = 116771
+-- and Cr.Gerente = 'denise dos santos dias silva' 
+-- and T.Nome LIKE '%Visita %'
+-- and MONTH(TerminoReal) = 01
+-- and YEAR(TerminoReal) = 2024
+-- group by R.Nome
+-- order by [Total de Visitas] DESC
+
+select R.Nome as Sup, COUNT(R.Nome)  as Realizado
+from Tarefa T
 inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
-inner join Execucao E on E.TarefaId = T.id
+inner join dw_vista.dbo.DM_Estrutura Es on Es.Id_Estrutura = T.EstruturaId
+inner join dw_vista.dbo.DM_CR c on c.Id_cr = Es.Id_cr
+where c.Gerente = 'CLAYTON MARTINS DAMASCENO'
+and T.Nome LIKE '%Visita %' 
+and MONTH(T.TerminoReal) = 02
+and Year(T.TerminoReal) = 2024
+GROUP BY R.Nome
+ORDER BY COUNT(R.Nome) DESC
+
+select R.Nome as Sup, COUNT(R.Nome)  as Realizado
+from Tarefa T with(nolock)
+inner join Recurso R with(nolock) on R.CodigoHash = T.FinalizadoPorHash
+inner join dw_vista.dbo.DM_Estrutura Es with(nolock) on Es.Id_Estrutura = T.EstruturaId
+inner join dw_vista.dbo.DM_CR c with(nolock) on c.Id_cr = Es.Id_cr
+where c.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
+and T.Nome LIKE '%Visita %'
+and R.Nome <> 'Sistema'
+and MONTH(T.TerminoReal) = 02
+and Year(T.TerminoReal) = 2024
+GROUP BY R.Nome
+ORDER BY COUNT(R.Nome) DESC
+
+select R.Nome as Sup, COUNT(R.Nome)  as Realizado
+from Tarefa T with(nolock)
+inner join Recurso R with(nolock) on R.CodigoHash = T.FinalizadoPorHash
+inner join dw_vista.dbo.DM_Estrutura Es with(nolock) on Es.Id_Estrutura = T.EstruturaId
+inner join dw_vista.dbo.DM_CR c with(nolock) on c.Id_cr = Es.Id_cr
+where c.Gerente = 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+and T.Nome LIKE '%Visita %'
+and R.Nome <> 'Sistema'
+and MONTH(T.TerminoReal) = 02
+and Year(T.TerminoReal) = 2024
+GROUP BY R.Nome
+ORDER BY COUNT(R.Nome) DESC
