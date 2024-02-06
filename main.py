@@ -1,15 +1,14 @@
 from parcial import *
 
+p = Parcial()
+
 class BackEnd:
     def run(self):
         horaInicio = p.getHour()
         while True:
             p.init() # Inicializa o App
-            # DIURNO
-            if p.hora == horaInicio and p.hora <= mudarTurno:
-                p.atalho('alt','tab')
-                p.sleep(2)
-
+            if p.hora == horaInicio and p.hora <= mudarTurno: # DIURNO
+                p.msg(nome='Meu Amor', mensagem='Isso é um teste do BOT')
                 # ESCALONADAS
                 p.make(
                     nome = 'GPS Vista - PR - Regional Denise' ,
@@ -18,7 +17,8 @@ class BackEnd:
                     from Tarefa T with(nolock)
                     inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
                     inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-                    where cr.GerenteRegional = 'denise dos santos dias silva'
+                    where cr.GerenteRegional = 'denise Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na 06/02/2024 - 11:10
+                      santos dias silva'
                     and T.Escalonado > 0
                     and T.Status <> 85
                     GROUP BY cr.Gerente, Es.Nivel_03
@@ -282,11 +282,9 @@ class BackEnd:
                     and R.Nome <> 'Sistema'
                     GROUP BY T.Nome, T.Descricao, R.Nome
                     ORDER BY [Total] DESC""", fimDeSemana=True)
-                
-                p.atalho('alt','tab')
+                    
                 horaInicio += 1
-
-            if p.hora == horaInicio and p.hora >= 19:
+            elif p.hora == horaInicio and p.hora >= 19: # NOTURNO
                 p.atalho('alt','tab')
                 p.sleep(1)
                 #LOGGI
@@ -345,14 +343,8 @@ class BackEnd:
                 
                 horaInicio += 1
                 p.atalho('alt','tab')
-
-            # FINAL
-            if p.hora == horaFinal:
-                horaInicio = horaInicioFixed
-
-            else:
-                p.display()
+            elif p.hora == horaFinal: horaInicio = horaInicioFixed # THE END
+            else: p.display() # DISPLAY HOUR
 
 if __name__ == '__main__':
-    p = Parcial()
     BackEnd().run()
