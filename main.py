@@ -7,8 +7,10 @@ class BackEnd:
         horaInicio = p.getHour()
         while True:
             p.init() # Inicializa o App
+            if p.hora == 8: # Mozin
+                p.msg(nome='Meu Amor', mensagem='Bom diaaaaa meu amor ❤ \n\nNão se esqueça de pegar a aliança e tomar café ☕💍 \nSeu busão passa 08:40 então esteja pronta 🚋 \nTih Amuhhh ❤❤')
+                
             if p.hora == horaInicio and p.hora <= mudarTurno: # DIURNO
-                p.msg(nome='Meu Amor', mensagem='Isso é um teste do BOT')
                 # ESCALONADAS
                 p.make(
                     nome = 'GPS Vista - PR - Regional Denise' ,
@@ -17,8 +19,7 @@ class BackEnd:
                     from Tarefa T with(nolock)
                     inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
                     inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-                    where cr.GerenteRegional = 'denise Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na 06/02/2024 - 11:10
-                      santos dias silva'
+                    where cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
                     and T.Escalonado > 0
                     and T.Status <> 85
                     GROUP BY cr.Gerente, Es.Nivel_03
