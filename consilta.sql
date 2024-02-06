@@ -129,15 +129,31 @@
 -- GROUP BY R.Nome
 -- ORDER BY COUNT(R.Nome) DESC
 
-select Es.Descricao, R.Nome, cr.Gerente, T.TerminoReal as 'Data de Realização'
-from Tarefa T with(nolock)
-inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
-inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
-inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-where cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
-and cr.Gerente <> 'JOSIEL CESAR RIBAS DE OLIVEIRA'
-and T.Nome = 'TAREFA INICIAL BK'
-and R.Nome <> 'Sistema'
-and DAY(TerminoReal) = 06
-and MONTH(TerminoReal) = 02
-and YEAR(TerminoReal) = 2024
+-- select Es.Descricao, R.Nome, cr.Gerente, T.TerminoReal as 'Data de Realização'
+-- from Tarefa T with(nolock)
+-- inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+-- inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+-- inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+-- where cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
+-- and cr.Gerente <> 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+-- and T.Nome = 'TAREFA INICIAL BK'
+-- and R.Nome <> 'Sistema'
+-- and DAY(TerminoReal) = 06
+-- and MONTH(TerminoReal) = 02
+-- and YEAR(TerminoReal) = 2024
+
+SELECT
+(CASE WHEN T.Status = 10 THEN 'ABERTA' ELSE
+(CASE WHEN T.Status = 85 THEN 'FINALIZADA' ELSE
+(CASE WHEN T.Status = 25 THEN 'INICIADA' END) END) END) as 'status',
+T.Nome, 
+COUNT(T.Nome) as 'Total'
+FROM Tarefa T with(nolock)
+INNER JOIN Dw_vista.dbo.DM_ESTRUTURA ES with(nolock) ON ES.ID_ESTRUTURA = T.EstruturaId
+WHERE ES.CRNo = 13223
+AND T.Nome LIKE '%INSPEÇÃO%'
+AND DAY(T.Disponibilizacao) = 06
+AND MONTH(T.Disponibilizacao) = 02
+AND YEAR(T.Disponibilizacao) = 2024
+GROUP BY T.[Status], T.Nome
+ORDER BY T.[Status], [Total] DESC
