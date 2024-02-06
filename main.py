@@ -220,6 +220,7 @@ class BackEnd:
                     inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
                     inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
                     where cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
+                    and cr.Gerente <> 'JOSIEL CESAR RIBAS DE OLIVEIRA'
                     and T.Nome = 'TAREFA INICIAL BK'
                     and R.Nome <> 'Sistema'
                     and DAY(TerminoReal) = {p.day}
