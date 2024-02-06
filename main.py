@@ -73,6 +73,7 @@ class BackEnd:
                     inner join DW_Vista.dbo.DM_Estrutura Es on Es.Id_Estrutura = T.EstruturaId
                     inner join DW_Vista.dbo.DM_CR cr on cr.Id_CR = Es.ID_Cr
                     where T.Nome LIKE '%Visita %'
+                    and R.Nome <> 'Sistema'
                     and Cr.Gerente = 'CLAYTON MARTINS DAMASCENO'
                     and DAY(T.TerminoReal) = {p.day}
                     and MONTH(T.TerminoReal) = {p.month}
@@ -138,6 +139,7 @@ class BackEnd:
                     inner join dw_vista.dbo.DM_CR c on c.Id_cr = Es.Id_cr
                     where c.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
                     and T.Nome LIKE '%Visita %' 
+                    and R.Nome <> 'Sistema'
                     and month(TerminoReal) = {p.month}
                     and YEAR(TerminoReal) = {p.year}
                     GROUP BY R.Nome
@@ -186,6 +188,7 @@ class BackEnd:
                     inner join dw_vista.dbo.DM_CR c on c.Id_cr = Es.Id_cr
                     where c.Gerente = 'JOSIEL CESAR RIBAS DE OLIVEIRA'
                     and T.Nome LIKE '%Visita %' 
+                    and R.Nome <> 'Sistema'
                     and month(TerminoReal) = {p.month}
                     and YEAR(TerminoReal) = {p.year}
                     GROUP BY R.Nome
@@ -211,17 +214,17 @@ class BackEnd:
                 # PRESENTEISMO BK
                 p.make(
                     nome='Alinhamentos BK - Londrina e Maringá',legenda='Segue *Tarefas Inicias BK* Realizadas!',
-                    consulta=f"""select Es.Descricao, R.Nome, T.TerminoReal as 'Data de Realização'
+                    consulta=f"""select Es.Descricao, R.Nome, cr.Gerente, T.TerminoReal as 'Data de Realização'
                     from Tarefa T with(nolock)
                     inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
                     inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-                    where cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
+                    where cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
                     and T.Nome = 'TAREFA INICIAL BK'
+                    and R.Nome <> 'Sistema'
                     and DAY(TerminoReal) = {p.day}
                     and MONTH(TerminoReal) = {p.month}
-                    and YEAR(TerminoReal) = {p.year}
-                    """)
+                    and YEAR(TerminoReal) = {p.year}""", fimDeSemana=True)
                 
                 # LOGGI
                 p.make(nome='Gps/ loggi',
