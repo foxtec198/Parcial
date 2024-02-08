@@ -290,8 +290,6 @@ class BackEnd:
                     
                 horaInicio += 1
             elif p.hora == horaInicio and p.hora >= 19: # NOTURNO
-                p.atalho('alt','tab')
-                p.sleep(1)
                 #LOGGI
                 p.make(nome='Gps/ loggi',
                     legenda=f"Segue rondas realizadas até {p.now}",
@@ -347,7 +345,6 @@ class BackEnd:
                     ORDER BY [Total] DESC""", fimDeSemana=True)
                 
                 horaInicio += 1
-                p.atalho('alt','tab')
             elif p.hora == horaFinal: horaInicio = horaInicioFixed # THE END
             else: p.display() # DISPLAY HOUR
 
