@@ -8,7 +8,7 @@ from os import system, mkdir # Systems
 from sqlalchemy import create_engine # SQL Server
 
 # Parametros globais
-engine = create_engine('mssql://guilherme.breve:84584608Guilherme@10.56.6.56/Vista_Replication_PRD?driver=SQL Server')
+engine = create_engine('mssql://guilherme.breve:8458Guilherme@10.56.6.56/Vista_Replication_PRD?driver=SQL Server')
 horaInicio = 8
 mudarTurno = 18
 horaFinal = 7
