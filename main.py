@@ -7,7 +7,7 @@ class BackEnd:
         horaInicio = p.getHour()
         while True:
             p.init() # Inicializa o App
-            if p.hora == 8: # Mozin
+            if p.horaC == "08:30:00": # Mozin
                 p.msg(nome='Meu Amor', mensagem='Bom diaaaaa meu amor ❤ \n\nNão se esqueça de pegar a aliança e tomar café ☕💍 \nSeu busão passa 08:40 então esteja pronta 🚋 \nTih Amuhhh ❤❤')
                 
             if p.hora == horaInicio and p.hora <= mudarTurno: # DIURNO
