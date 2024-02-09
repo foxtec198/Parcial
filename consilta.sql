@@ -158,18 +158,19 @@
 -- GROUP BY T.[Status], T.Nome
 -- ORDER BY T.[Status], [Total] DESC
 
-select Es.Descricao, R.Nome, cr.Gerente, T.TerminoReal as 'Data de Realização'
-from Tarefa T with(nolock)
-inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
-inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
-inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-where cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
-and cr.Gerente <> 'JOSIEL CESAR RIBAS DE OLIVEIRA'
-and T.Nome = 'TAREFA INICIAL BK'
-and R.Nome <> 'Sistema'
-and DAY(TerminoReal) = 9
-and MONTH(TerminoReal) = 2
-and YEAR(TerminoReal) = 2023
+-- select Es.Descricao,
+-- (CASE WHEN R.Nome = 'Sistema' THEN 'FINALIZADO PELO SISTEMA' END) as 'Colaborador', 
+-- T.TerminoReal as 'Data de Realização'
+-- from Tarefa T with(nolock)
+-- inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+-- inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
+-- inner join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
+-- where cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
+-- and cr.Gerente <> 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+-- and T.Nome = 'TAREFA INICIAL BK'
+-- and DAY(TerminoReal) = 9
+-- and MONTH(TerminoReal) = 2
+-- and YEAR(TerminoReal) = 2024
 
 
 -- and DAY(TerminoReal) = {p.day}

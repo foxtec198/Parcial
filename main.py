@@ -234,7 +234,7 @@ class BackEnd:
 
                 # PRESENTEISMO BK FZI/CSC
                 p.make(
-                    nome='Alinhamentos BK - Londrina e Maringá',legenda='Segue *Tarefas Inicias BK* Realizadas!',
+                    nome='Burger King Cascavel/Foz',legenda='Segue *Tarefas Inicias BK* Realizadas!',
                     consulta=f"""select Es.Descricao,
                     (CASE WHEN R.Nome = 'Sistema' THEN 'FINALIZADO PELO SISTEMA' END) as 'Colaborador', 
                     T.TerminoReal as 'Data de Realização'
