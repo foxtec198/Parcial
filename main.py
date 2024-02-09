@@ -218,7 +218,9 @@ class BackEnd:
                 # PRESENTEISMO BK
                 p.make(
                     nome='Alinhamentos BK - Londrina e Maringá',legenda='Segue *Tarefas Inicias BK* Realizadas!',
-                    consulta=f"""select Es.Descricao, R.Nome, cr.Gerente, T.TerminoReal as 'Data de Realização'
+                    consulta=f"""select Es.Descricao,
+                    (CASE WHEN R.Nome = 'Sistema' THEN 'FINALIZADO PELO SISTEMA' END) as 'Colaborador', 
+                    T.TerminoReal as 'Data de Realização'
                     from Tarefa T with(nolock)
                     inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
                     inner join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
@@ -226,10 +228,9 @@ class BackEnd:
                     where cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
                     and cr.Gerente <> 'JOSIEL CESAR RIBAS DE OLIVEIRA'
                     and T.Nome = 'TAREFA INICIAL BK'
-                    and R.Nome <> 'Sistema'
                     and DAY(TerminoReal) = {p.day}
                     and MONTH(TerminoReal) = {p.month}
-                    and YEAR(TerminoReal) = {p.year}""", fimDeSemana=True)
+                    and YEAR(TerminoReal) = 2024""", fimDeSemana=True)
                 
                 # LOGGI
                 p.make(nome='Gps/ loggi',
