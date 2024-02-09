@@ -1,18 +1,16 @@
 import datetime
 import os.path
-from time import strftime as t
+import pandas as pd
+from dataframe_image import export
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-# If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
-
-
 class GoogleCalendar():
   def get_events(self):
+    SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
     creds = None
     if os.path.exists("token.json"):
       creds = Credentials.from_authorized_user_file("token.json", SCOPES)
@@ -32,15 +30,23 @@ class GoogleCalendar():
               calendarId="primary",
               timeMin=now,
               singleEvents=True,
+              maxResults=30,
               orderBy="startTime",
           ).execute())
       return events_result.get("items", [])
     except HttpError as error: print(f"An error occurred: {error}")
 
+  def criar_imagem(self):
+    eventos = self.get_events()
+    nome = []
+    horario = []
+    col = {'Data':''}
+    for evento in eventos:
+      nome.append(evento['summary'])
+      for item in evento['start']:
+        if item == 'dateTime': horario.append(evento['start']['dateTime'])
+        elif item == 'date': horario.append(evento['start']['date'])
 
-if __name__ == "__main__":
-  g = GoogleCalendar()
-  eventos = g.get_events()
-  for evento in eventos:
-    print(evento['summary'])
-    break
+    df = pd.DataFrame(index=nome, data=horario, columns=col)
+    export(df, 'dist/calendar.png')
+    return 'dist/calendar.png'

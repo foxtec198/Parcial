@@ -6,6 +6,7 @@ from pandas import read_sql, DataFrame # Tratamento de Dados
 from dataframe_image import export # Export png
 from os import system, mkdir # Systems
 from sqlalchemy import create_engine # SQL Server
+from events import GoogleCalendar
 
 # Parametros globais
 engine = create_engine('mssql://guilherme.breve:8458Guilherme@10.56.6.56/Vista_Replication_PRD?driver=SQL Server')
@@ -19,8 +20,9 @@ class Parcial:
         pg.FAILSAFE = False
         pg.PAUSE = 1.5
         self.create_dist()
-        print(self.connection())
+        self.connection()
         self.pc = PyClipboardPlus()
+        self.event = GoogleCalendar()
 
     def create_dist(self):
         try: mkdir('dist')
@@ -54,7 +56,7 @@ class Parcial:
                 self.png(nomeArquivo=arquivo, consulta=consulta)
                 self.envio(nome=nome,legenda=legenda)
 
-    def msg(self, nome, mensagem):
+    def msg(self, nome, mensagem, img = None):
         # Entrar no chat
         self.atalho('alt','tab')
         sl(1)
@@ -64,11 +66,20 @@ class Parcial:
         sl(2)
         self.atalho('ctrl','1')
         sl(7)
-        
-        # Enviar mensagem e fechamento de chat
-        self.cola(mensagem)
-        pg.press('enter')
-        pg.press('esc')
+
+        if img: # Caso tenha Imagem
+            self.pc.write_image_to_clipboard(img)
+            self.atalho('ctrl','v')
+            sl(5)
+            self.cola(mensagem)
+            sl(1)
+            pg.press('enter')
+            pg.press('esc')
+        else: # Caso não tenha Imagem
+            self.cola(mensagem)
+            pg.press('enter')
+            pg.press('esc')
+
         self.atalho('ctrl','f')
         self.atalho('ctrl','a')
         pg.press('backspace')
@@ -100,13 +111,11 @@ class Parcial:
         pg.press('backspace')
         self.atalho('alt','tab')
 
-
     def png(self, consulta, nomeArquivo):
         self.nomeArquivo = f"dist/{nomeArquivo}"
         cv = read_sql(consulta, self.conn)
-        df = DataFrame(cv)
-        self.dataFrameBool = df.empty
-        export(df, self.nomeArquivo, max_rows=95)
+        # self.dataFrameBool = cv.empty
+        export(cv, self.nomeArquivo, max_rows=95)
 
     def atalho(self, *key):
         with pg.hold(key[0]):
@@ -125,3 +134,7 @@ class Parcial:
         ent = input('Horario: ')
         if ent != '': return int(ent)
         else: return 8
+
+
+if __name__ == '__main__':
+    p = Parcial()

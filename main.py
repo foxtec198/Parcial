@@ -7,8 +7,12 @@ class BackEnd:
         horaInicio = p.getHour()
         while True:
             p.init() # Inicializa o App
+
+            if p.horaC >= "08:00:00" and p.horaC <= "08:00:05": # Eventos
+                p.msg(nome='Eventos', mensagem='Segue seus eventos mais recentes! 📆', img= p.event.criar_imagem())
+
             if p.horaC >= "08:30:00" and p.horaC <= "08:30:10": # Mozin
-                p.msg(nome='Meu Amor', mensagem='Bom diaaaaa meu amor ❤ \n\nNão se esqueça de pegar a aliança e tomar café ☕💍 \nSeu busão passa 08:40 então esteja pronta 🚋 \nTih Amuhhh ❤❤')
+                p.msg(nome='Meu Amor ❤❤', mensagem='Bom diaaaaa meu amor ❤ \n\nNão se esqueça de pegar a aliança e tomar café ☕💍 \nSeu busão passa 08:40 então esteja pronta 🚋 \nTih Amuhhh ❤❤')
                 
             if p.hora == horaInicio and p.hora <= mudarTurno: # DIURNO
                 # ESCALONADAS
@@ -345,7 +349,7 @@ class BackEnd:
                     ORDER BY [Total] DESC""", fimDeSemana=True)
                 
                 horaInicio += 1
-            elif p.hora == horaFinal: horaInicio = horaInicioFixed # THE END
+            elif p.hora ==  horaFinal: horaInicio = horaInicioFixed # THE END
             else: p.display() # DISPLAY HOUR
 
 if __name__ == '__main__':
