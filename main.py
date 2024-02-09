@@ -219,7 +219,7 @@ class BackEnd:
                 p.make(
                     nome='Alinhamentos BK - Londrina e Maringá',legenda='Segue *Tarefas Inicias BK* Realizadas!',
                     consulta=f"""select Es.Descricao,
-                    (CASE WHEN R.Nome = 'Sistema' THEN 'FINALIZADO PELO SISTEMA' END) as 'Colaborador', 
+                    (CASE WHEN R.Nome = 'Sistema' THEN 'FINALIZADO PELO SISTEMA' ELSE R.Nome END) as 'Colaborador', 
                     T.TerminoReal as 'Data de Realização'
                     from Tarefa T with(nolock)
                     inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
@@ -236,7 +236,7 @@ class BackEnd:
                 p.make(
                     nome='Burger King Cascavel/Foz',legenda='Segue *Tarefas Inicias BK* Realizadas!',
                     consulta=f"""select Es.Descricao,
-                    (CASE WHEN R.Nome = 'Sistema' THEN 'FINALIZADO PELO SISTEMA' END) as 'Colaborador', 
+                    (CASE WHEN R.Nome = 'Sistema' THEN 'FINALIZADO PELO SISTEMA' ELSE R.Nome END) as 'Colaborador', 
                     T.TerminoReal as 'Data de Realização'
                     from Tarefa T with(nolock)
                     inner join Recurso R on R.CodigoHash = T.FinalizadoPorHash
