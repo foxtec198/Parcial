@@ -38,7 +38,7 @@ class Parcial:
         self.day = st('%d')
         self.month = st('%m')
         self.year = st('%Y')
-        self.horaC = st('%X')
+        self.horaC = st('%H:%M:%S')
         self.hora = int(st('%H'))
         self.nameOfMonth = st('%h')
 
