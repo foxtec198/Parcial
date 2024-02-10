@@ -6,6 +6,8 @@ from pandas import read_sql # Tratamento de Dados
 from dataframe_image import export # Export png
 from os import system, mkdir # Systems
 from sqlalchemy import create_engine # SQL Server
+from datetime import datetime
+import sys
 
 def atalho(*args):
     with pg.hold(args[0]):
@@ -83,10 +85,13 @@ class Parcial:
 
         self.whats = WA()
         login = self.whats.sql_connection(uid, pwd, server)
-        if not login: print('Login com SQL Não realizado!')
-
+        if not login: sys.exit('Login SQL não realizado, verifique as credenciais... ')
     def update(self):
         self.hora = int(st('%H'))
+        self.now = datetime.now
+        self.day = st('%d')
+        self.month = st('%m')
+        self.year = st('%Y')
 
     def definir_inicio(self):
         self.update()
@@ -99,44 +104,26 @@ class Parcial:
             alternated = self.hora_inicio
         return alternated
     
-    def main_loop(self, funcs: list):
+    def main_loop(self, funcs: list, funcsE = None):
         h = self.definir_inicio()
         while True:
             fds = st('%a')
             self.update()
-            if self.hora == h:
-                for f in funcs:
+            for f in funcs:
+                if self.hora == h:
                     if type(f) == list and fds == 'Sat' or fds == 'Sun':
                         for i in f:
                             i()
-                    if type(f) != list and fds != 'Sat' and fds != 'Sun':
+                        h += 1
+                    elif type(f) != list and fds != 'Sat' and fds != 'Sun':
                         f()
-                h += 1
-            else: display(h)
-
-if __name__=='__main__':
-    p = Parcial(
-        'guilherme.breve',
-        '8458Guilherme',
-        '10.56.6.56',
-        hora_inicio=11)
-    
-    funcs =[
-        lambda: p.whats.enviar_msg(
-            nome = 'Guilherme', 
-            mensagem = 'Imagem Enviada', 
-            img = p.whats.criar_imagem_SQL('select top 1 Nome, TerminoReal from Tarefa')), 
-
-        lambda: p.whats.enviar_msg(
-            nome = 'Guilherme', 
-            mensagem = 'teste', 
-            img = 'dist/calendar.png'),
-    ]
-
-    funcs_fds = [
-        lambda: p.whats.enviar_msg('Guilherme','Teste do Fim de Semana','dist/temp.png')
-    ]
-
-    funcs.append(funcs_fds)
-
-    p.main_loop(funcs)
+                        h += 1
+                elif type(f) == dict:
+                    he = st('%X')
+                    for item in f:
+                        horario = item
+                        func = f[item]
+                        if he >= f'{horario}:00' and he <= f'{horario}:01':
+                            func()
+                elif self.hora == self.hora_final: h = self.hora_inicio
+                else: display(h)
