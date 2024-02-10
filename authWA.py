@@ -104,7 +104,7 @@ class Parcial:
             alternated = self.hora_inicio
         return alternated
     
-    def main_loop(self, funcs: list, funcsE = None):
+    def main_loop(self, funcs: list):
         h = self.definir_inicio()
         while True:
             fds = st('%a')
@@ -126,4 +126,4 @@ class Parcial:
                         if he >= f'{horario}:00' and he <= f'{horario}:01':
                             func()
                 elif self.hora == self.hora_final: h = self.hora_inicio
-                else: display(h)
+                display(h)

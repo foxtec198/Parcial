@@ -1,7 +1,7 @@
 from authWA import Parcial
 from events import GoogleCalendar
 
-p = Parcial('guilherme.breve', '8458Guilherme','10.56.6.56', hora_final=13)
+p = Parcial('guilherme.breve', '8458Guilherme','10.56.6.56', hora_inicio=8, hora_final=7)
 google = GoogleCalendar()
 
 # Dias de Semana
