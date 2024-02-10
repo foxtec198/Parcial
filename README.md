@@ -1,5 +1,5 @@
 # AuthWA
-![create by icons8](assets/robot.png){width='100' .center}
+![create by icons8](docs/assets/robot.png){width='100' .center}
 
 ## Instalação
 
