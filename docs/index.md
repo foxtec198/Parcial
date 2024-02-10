@@ -19,13 +19,11 @@
 
 ## Whatsapp
 Envio de mensagens simples e com Imagens no o Whatsapp, para deixar sua imaginação fluir e construir suas automações!
->### Objetivo
-> A Intenção deste modulo do AuthWA, é que você consiga usar a critividade para criar suas automações
 
->### title 2
->### title 3
+>### Objetivo
+> A Intenção deste modulo do AuthWA, é que você consiga usar a critividade para criar suas automações.
+
 
 ## Parcial
-### title 1
-### title 2
-### title 3
+
+## Tutorial
