@@ -88,7 +88,7 @@ class Parcial:
         if not login: sys.exit('Login SQL não realizado, verifique as credenciais... ')
     def update(self):
         self.hora = int(st('%H'))
-        self.now = datetime.now
+        self.now = datetime.now()
         self.day = st('%d')
         self.month = st('%m')
         self.year = st('%Y')
