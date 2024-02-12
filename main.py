@@ -289,6 +289,21 @@ master = [
         GROUP BY T.Nome, T.Descricao, R.Nome
         ORDER BY [Total] DESC""")
     ),
+    lambda: p.whats.enviar_msg(
+        'Cargill Maringá', # MAGAZINE LUIZA
+        f"Segue rondas realizadas até {p.now}",
+        p.whats.criar_imagem_SQL(f"""SELECT T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+        FROM Tarefa T with(nolock)
+        INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+        INNER join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+        WHERE Es.CRNo = 11753
+        AND DAY(TerminoReal) = {p.day}
+        AND MONTH(TerminoReal) = {p.month}
+        AND YEAR(TerminoReal) = {p.year}
+        AND R.Nome <> 'Sistema'
+        GROUP BY T.Nome, T.Descricao, R.Nome
+        ORDER BY [Total] DESC""")
+    ),
     # lambda: p.whats.enviar_msg(),
     )
 ]
@@ -395,6 +410,21 @@ fds = [
         INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
         WHERE Es.CRNo = 35900
+        AND DAY(TerminoReal) = {p.day}
+        AND MONTH(TerminoReal) = {p.month}
+        AND YEAR(TerminoReal) = {p.year}
+        AND R.Nome <> 'Sistema'
+        GROUP BY T.Nome, T.Descricao, R.Nome
+        ORDER BY [Total] DESC""")
+    ),
+    lambda: p.whats.enviar_msg(
+        'Cargill Maringá', # MAGAZINE LUIZA
+        f"Segue rondas realizadas até {p.now}",
+        p.whats.criar_imagem_SQL(f"""SELECT T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+        FROM Tarefa T with(nolock)
+        INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+        INNER join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+        WHERE Es.CRNo = 11753
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
         AND YEAR(TerminoReal) = {p.year}
