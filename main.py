@@ -406,7 +406,7 @@ fds = [
 
 # Mensagem com __Horario_Exato__ e com Recorrencia
 r = {
-    '08:00': lambda: p.whats.enviar_msg(
+    '08:50': lambda: p.whats.enviar_msg(
         'Eventos','Segue os eventos recentes!', google.criar_imagem()
     ),
     '08:30': lambda: p.whats.enviar_msg(
