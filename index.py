@@ -1,11 +1,12 @@
 from authWA import Parcial
 from events import GoogleCalendar
 
-p = Parcial('guilherme.breve', '8458Guilherme','10.56.6.56', hora_inicio=8, hora_final=7)
+p = Parcial('guilherme.breve', '8458Guilherme','10.56.6.56', hora_final=23)
 google = GoogleCalendar()
 
 # Dias de Semana
 master = [
+    (
     lambda: p.whats.enviar_msg(
         'GPS Vista - PR - Regional Denise', #Escalonadas
         f'Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na {p.now}',
@@ -289,6 +290,7 @@ master = [
         ORDER BY [Total] DESC""")
     ),
     # lambda: p.whats.enviar_msg(),
+    )
 ]
 
 # Fim de Semana
