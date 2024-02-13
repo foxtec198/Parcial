@@ -290,7 +290,7 @@ master = [
         ORDER BY [Total] DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'Cargill Maringá', # MAGAZINE LUIZA
+        'Vigilantes Magazine Luiza', # MAGAZINE LUIZA
         f"Segue rondas realizadas até {p.now}",
         p.whats.criar_imagem_SQL(f"""SELECT T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
         FROM Tarefa T with(nolock)
