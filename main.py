@@ -1,12 +1,17 @@
 from authWA import Parcial
 from events import GoogleCalendar
 
-p = Parcial('guilherme.breve', '8458Guilherme','10.56.6.56', hora_inicio = 9, hora_final=23)
+p = Parcial('guilherme.breve', '8458Guilherme','10.56.6.56', hora_final=23)
 google = GoogleCalendar()
 
 # Dias de Semana
 master = [
     (
+    lambda: p.whats.enviar_msg( # Events
+        'Eventos',
+        'Segue os eventos recentes!',
+        google.criar_imagem()
+    ),
     lambda: p.whats.enviar_msg(
         'GPS Vista - PR - Regional Denise', #Escalonadas
         f'Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na {p.now}',
@@ -436,9 +441,6 @@ fds = [
 
 # Mensagem com __Horario_Exato__ e com Recorrencia
 r = {
-    '08:50': lambda: p.whats.enviar_msg(
-        'Eventos','Segue os eventos recentes!', google.criar_imagem()
-    ),
     '08:30': lambda: p.whats.enviar_msg(
         'Meu amor ❤❤❤', 'Bom diaaaaa meu amor ❤ \n\nNão se esqueça de pegar a aliança e tomar café ☕💍 \nSeu busão passa 08:40 então esteja pronta 🚋 \nTih Amuhhh ❤❤'
     )
