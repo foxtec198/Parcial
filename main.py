@@ -315,6 +315,11 @@ master = [
 
 # Fim de Semana
 fds = [
+    lambda: p.whats.enviar_msg( # Events
+        'Eventos',
+        'Segue os eventos recentes!',
+        google.criar_imagem()
+    ),
     lambda: p.whats.enviar_msg(
         'GPS Vista - PR - Regional Denise',
         f'Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na {p.now}',
@@ -442,7 +447,12 @@ fds = [
 # Mensagem com __Horario_Exato__ e com Recorrencia
 r = {
     '08:30': lambda: p.whats.enviar_msg(
-        'Meu amor ❤❤❤', 'Bom diaaaaa meu amor ❤ \n\nNão se esqueça de pegar a aliança e tomar café ☕💍 \nSeu busão passa 08:40 então esteja pronta 🚋 \nTih Amuhhh ❤❤'
+        'Meu amor ❤❤❤', 
+        '''Bom diaaaaa meu amor ❤
+Não se esqueça de pegar a aliança e tomar café ☕💍
+Seu busão passa 08:40 então esteja pronta 🚋 
+
+Tih Amuhhh ❤❤'''
     )
 }
 
