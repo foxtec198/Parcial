@@ -305,9 +305,9 @@ dds = (
         join Execucao E on E.TarefaId = T.Id
         join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
         WHERE Es.CRNo = 11753
-        AND DAY(TerminoReal) = 22
-        AND MONTH(TerminoReal) = 02
-        AND YEAR(TerminoReal) = 2024
+        AND DAY(TerminoReal) = {p.day}
+        AND MONTH(TerminoReal) = {p.month}
+        AND YEAR(TerminoReal) = {p.year}
         AND R.Nome <> 'Sistema'
         AND E.Conteudo = 'SIM'
         GROUP BY T.Nome, T.Descricao, R.Nome
@@ -448,17 +448,34 @@ fds = [
     lambda: p.whats.enviar_msg(
         'Vigilantes Magazine Luiza', # MAGAZINE LUIZA
         f"Segue rondas realizadas até {p.now}",
-        p.whats.criar_imagem_SQL(f"""SELECT T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+        p.whats.criar_imagem_SQL(f"""SELECT DISTINCT T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
         FROM Tarefa T with(nolock)
-        INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
-        INNER join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+        join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+        join Execucao E on E.TarefaId = T.Id
+        join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
         WHERE Es.CRNo = 11753
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
         AND YEAR(TerminoReal) = {p.year}
         AND R.Nome <> 'Sistema'
+        AND E.Conteudo = 'SIM'
         GROUP BY T.Nome, T.Descricao, R.Nome
         ORDER BY [Total] DESC""")
+    ),
+    lambda: p.whats.enviar_msg(
+        'Vigilantes Magazine Luiza', # MAGAZINE LUIZA NÃO REALIZADO
+        f"Segue relatório de *NÃO Realizadas* até {p.now}",
+        p.whats.criar_imagem_SQL(f"""SELECT DISTINCT (T.TerminoReal) as 'Data', R.Nome as 'Vigilante', Es.Descricao as 'Local', E.Conteudo as 'Motivo'
+        FROM Tarefa T with(nolock)
+        join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+        join Execucao E on E.TarefaId = T.Id
+        join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+        WHERE Es.CRNo = 11753
+        AND DAY(TerminoReal) = {p.day}
+        AND MONTH(TerminoReal) = {p.month}
+        AND YEAR(TerminoReal) = {p.year}
+        AND R.Nome <> 'Sistema'
+        AND E.PerguntaDescricao = 'INFORMAR O MOTIVO NO CAMPO ABAIXO.'""")
     ),
 ]
 
