@@ -4,9 +4,10 @@ from events import GoogleCalendar
 p = Parcial('guilherme.breve', '8458Guilherme','10.56.6.56', hora_final=23)
 google = GoogleCalendar()
 
+master = []
+
 # Dias de Semana
-master = [
-    (
+dds = (
     lambda: p.whats.enviar_msg( # Events
         'Eventos',
         'Segue os eventos recentes!',
@@ -15,7 +16,8 @@ master = [
     lambda: p.whats.enviar_msg(
         'GPS Vista - PR - Regional Denise', #Escalonadas
         f'Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na {p.now}',
-        p.whats.criar_imagem_SQL('''SELECT cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
+        p.whats.criar_imagem_SQL("""
+        SELECT cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
         FROM Tarefa T WITH(NOLOCK)
         INNER join dw_vista.dbo.DM_ESTRUTURA Es WITH(NOLOCK) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_cr = es.Id_cr
@@ -23,7 +25,7 @@ master = [
         AND T.Escalonado > 0
         AND T.Status <> 85
         GROUP BY cr.Gerente, Es.Nivel_03
-        ORDER BY cr.Gerente, [Escalonadas] DESC ''')
+        ORDER BY cr.Gerente, [Escalonadas] DESC""")
     ),
     lambda: p.whats.enviar_msg(
         'ENCARREGADAS GPS', # FIEP DENISE
@@ -297,21 +299,37 @@ master = [
     lambda: p.whats.enviar_msg(
         'Vigilantes Magazine Luiza', # MAGAZINE LUIZA
         f"Segue rondas realizadas até {p.now}",
-        p.whats.criar_imagem_SQL(f"""SELECT T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
+        p.whats.criar_imagem_SQL(f"""SELECT DISTINCT T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
         FROM Tarefa T with(nolock)
-        INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
-        INNER join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+        join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+        join Execucao E on E.TarefaId = T.Id
+        join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
+        WHERE Es.CRNo = 11753
+        AND DAY(TerminoReal) = 22
+        AND MONTH(TerminoReal) = 02
+        AND YEAR(TerminoReal) = 2024
+        AND R.Nome <> 'Sistema'
+        AND E.Conteudo = 'SIM'
+        GROUP BY T.Nome, T.Descricao, R.Nome
+        ORDER BY [Total] DESC""")
+    ),
+    lambda: p.whats.enviar_msg(
+        'Vigilantes Magazine Luiza', # MAGAZINE LUIZA NÃO REALIZADO
+        f"Segue relatório de *NÃO Realizadas* até {p.now}",
+        p.whats.criar_imagem_SQL(f"""SELECT DISTINCT (T.TerminoReal) as 'Data', R.Nome as 'Vigilante', Es.Descricao as 'Local', E.Conteudo as 'Motivo'
+        FROM Tarefa T with(nolock)
+        join Recurso R on R.CodigoHash = T.FinalizadoPorHash
+        join Execucao E on E.TarefaId = T.Id
+        join dw_vista.dbo.DM_Estrutura as Es on T.EstruturaId = Es.Id_Estrutura
         WHERE Es.CRNo = 11753
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
         AND YEAR(TerminoReal) = {p.year}
         AND R.Nome <> 'Sistema'
-        GROUP BY T.Nome, T.Descricao, R.Nome
-        ORDER BY [Total] DESC""")
+        AND E.PerguntaDescricao = 'INFORMAR O MOTIVO NO CAMPO ABAIXO.'""")
     ),
     # lambda: p.whats.enviar_msg(),
     )
-]
 
 # Fim de Semana
 fds = [
@@ -456,6 +474,8 @@ Tih Amuhhh ❤❤'''
     )
 }
 
+master.append(dds)
 master.append(fds)
 master.append(r)
+
 p.main_loop(master)
