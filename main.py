@@ -320,6 +320,23 @@ dds = (
         AND R.Nome <> 'Sistema'
         AND E.PerguntaDescricao = 'INFORMAR O MOTIVO NO CAMPO ABAIXO.'""")
     ),
+    lambda: p.whats.enviar_msg(
+        'Agraria - GPS Vista',
+        f"Segue tarefas realizadas por local até {p.now}",
+        p.whats.criar_imagem_SQL(f"""SELECT
+        Es.Descricao as 'Local', COUNT(Es.Descricao) as 'Realizado'
+        from Tarefa T
+        inner join Estrutura Es
+            on Es.Id = T.EstruturaId
+        where 
+            T.EstruturaNivel2 = '40859 - PR - LPG - AGRARIA  GUARAPUAVA'
+        and DAY(TerminoReal) = {p.day}
+        and MONTH(TerminoReal) = {p.month}
+        and YEAR(TerminoReal) = {p.year}
+        and Es.Nivel = 4
+        GROUP by Es.Descricao
+        ORDER BY [Realizado] DESC'""")
+    ),
     )
 
 # Fim de Semana
@@ -463,6 +480,7 @@ fds = [
         AND R.Nome <> 'Sistema'
         AND E.PerguntaDescricao = 'INFORMAR O MOTIVO NO CAMPO ABAIXO.'""")
     ),
+    
 ]
 
 # Mensagem com __Horario_Exato__ e com Recorrencia
