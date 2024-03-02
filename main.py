@@ -289,7 +289,7 @@ dds = (
         ORDER BY [Total] DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'Vigilantes Magazine Luiza', # MAGAZINE LUIZA
+        'Postos MagSeg', # MAGAZINE LUIZA
         f"Segue rondas realizadas até {p.now}",
         p.whats.criar_imagem_SQL(f"""SELECT DISTINCT T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
         FROM Tarefa T with(nolock)
@@ -306,7 +306,7 @@ dds = (
         ORDER BY [Total] DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'Vigilantes Magazine Luiza', # MAGAZINE LUIZA NÃO REALIZADO
+        'Postos MagSeg', # MAGAZINE LUIZA NÃO REALIZADO
         f"Segue relatório de *NÃO Realizadas* até {p.now}",
         p.whats.criar_imagem_SQL(f"""SELECT DISTINCT (T.TerminoReal) as 'Data', R.Nome as 'Vigilante', Es.Descricao as 'Local', E.Conteudo as 'Motivo'
         FROM Tarefa T with(nolock)
@@ -321,19 +321,18 @@ dds = (
         AND E.PerguntaDescricao = 'INFORMAR O MOTIVO NO CAMPO ABAIXO.'""")
     ),
     lambda: p.whats.enviar_msg(
-        'Agraria - GPS Vista',
+        'Agraria - GPS Vista', # Agraria
         f"Segue tarefas realizadas por local até {p.now}",
-        p.whats.criar_imagem_SQL(f"""SELECT
-        Es.Descricao as 'Local', 
-        COUNT(Es.Descricao) as 'Realizado'
+        p.whats.criar_imagem_SQL(f"""SELECT Es.Nivel_04 as 'Local',  
+        COUNT(T.Nome) as 'Realizado'
         from Tarefa T
-        INNER JOIN Estrutura Es on Es.Id = T.EstruturaId
-        WHERE T.EstruturaNivel2 = '40859 - PR - LPG - AGRARIA  GUARAPUAVA'
+        INNER JOIN dw_vista.dbo.DM_Estrutura Es 
+        on T.EstruturaId = Es.Id_estrutura
+        WHERE Es.CRNo = 40859
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
         AND YEAR(TerminoReal) = {p.year}
-        AND Es.Nivel = 4
-        GROUP by Es.Descricao
+        GROUP by Es.Nivel_04
         ORDER BY [Realizado] DESC""")
     ),
     )
@@ -448,7 +447,7 @@ fds = [
         ORDER BY [Total] DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'Vigilantes Magazine Luiza', # MAGAZINE LUIZA
+        'Postos MagSeg', # MAGAZINE LUIZA
         f"Segue rondas realizadas até {p.now}",
         p.whats.criar_imagem_SQL(f"""SELECT DISTINCT T.Nome, T.Descricao, R.Nome as 'Vigilante', COUNT(R.Nome) as Total
         FROM Tarefa T with(nolock)
@@ -465,7 +464,7 @@ fds = [
         ORDER BY [Total] DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'Vigilantes Magazine Luiza', # MAGAZINE LUIZA NÃO REALIZADO
+        'Postos MagSeg', # MAGAZINE LUIZA NÃO REALIZADO
         f"Segue relatório de *NÃO Realizadas* até {p.now}",
         p.whats.criar_imagem_SQL(f"""SELECT DISTINCT (T.TerminoReal) as 'Data', R.Nome as 'Vigilante', Es.Descricao as 'Local', E.Conteudo as 'Motivo'
         FROM Tarefa T with(nolock)
