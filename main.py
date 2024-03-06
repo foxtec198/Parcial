@@ -1,6 +1,7 @@
-from authWA import Parcial
+from authWA import Parcial, conectar_email
 
 p = Parcial('guilherme.breve', '8458Guilherme','10.56.6.56')
+conectar_email('foxtec198@gmail.com','vewmksduxchpjirg')
 master = []
 
 # Dias de Semana
