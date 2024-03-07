@@ -7,7 +7,7 @@ master = []
 # Dias de Semana
 dds = (
     lambda: p.whats.enviar_msg(
-        'GPS Vista - PR - Regional Denise', #Escalonadas
+        'GPS Vista - PR - Regional Denise', # Escalonadas
         f'Aqui esta as tarefas escalonadas do app GPS Vista, nivel Denise na {p.now}',
         p.whats.criar_imagem_SQL("""
         SELECT cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
@@ -151,7 +151,7 @@ dds = (
         ORDER BY [Total] DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'GPS Vista - JSL', # VISITAS DIA
+        'GPS Vista - FCP', # VISITAS DIA
         f'Segue Visitas Realizadas Até o Momento - {p.now} 🌇🏦',
         p.whats.criar_imagem_SQL(f"""SELECT R.Nome as 'Sup', Es.Nivel_03 as 'CR ', TerminoReal as 'Data de Finalização' 
         FROM Tarefa T WITH(NOLOCK)
@@ -159,20 +159,20 @@ dds = (
         INNER join DW_Vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join DW_Vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_CR = Es.ID_Cr
         WHERE T.Nome LIKE '%Visita %'
-        AND Cr.Gerente = 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+        AND Cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
         AND DAY(T.TerminoReal) = {p.day}
         AND MONTH(T.TerminoReal) = {p.month}
         AND YEAR(T.TerminoReal) = {p.year}""")
     ),
     lambda: p.whats.enviar_msg(
-        'GPS Vista - JSL', # VISITAS MES
+        'GPS Vista - FCP', # VISITAS MES
         f'Segue Visitas Realizas deste mês! 📆',
         p.whats.criar_imagem_SQL(f"""SELECT R.Nome as Sup, COUNT(R.Nome)  as Realizado
         FROM Tarefa T WITH(NOLOCK)
         INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR c WITH(NOLOCK) on c.Id_cr = Es.Id_cr
-        WHERE c.Gerente = 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+        WHERE c.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
         AND T.Nome LIKE '%Visita %' 
         AND R.Nome <> 'Sistema'
         AND month(TerminoReal) = {p.month}
@@ -181,13 +181,13 @@ dds = (
         ORDER BY COUNT(R.Nome) DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'GPS Vista - JSL', # VISITAS ABERTAS
+        'GPS Vista - FCP', # VISITAS ABERTAS
         f'Segue Visitas Operacionais *ABERTAS/INICIADAS DESTE MÊS!* 🚧',
         p.whats.criar_imagem_SQL(f"""SELECT Cliente, COUNT(Cliente) as 'Total'
         FROM Tarefa T with(nolock)
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-        WHERE cr.Gerente = 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
         AND T.Nome = 'Visita Oper. Liderança'
         AND MONTH(Disponibilizacao) = {p.month}
         AND YEAR(Disponibilizacao) = {p.year}
@@ -207,7 +207,7 @@ dds = (
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
         WHERE cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
-        AND cr.Gerente <> 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+        AND cr.Gerente <> 'GLEISSON EVANGELISTA DE OLIVEI'
         AND T.Nome = 'TAREFA INICIAL BK'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
@@ -223,7 +223,7 @@ dds = (
         INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-        WHERE cr.Gerente = 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
         AND T.Nome = 'TAREFA INICIAL BK'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
@@ -365,7 +365,7 @@ fds = [
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
         WHERE cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
-        AND cr.Gerente <> 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+        AND cr.Gerente <> 'GLEISSON EVANGELISTA DE OLIVEI'
         AND T.Nome = 'TAREFA INICIAL BK'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
@@ -381,7 +381,7 @@ fds = [
         INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-        WHERE cr.Gerente = 'JOSIEL CESAR RIBAS DE OLIVEIRA'
+        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
         AND T.Nome = 'TAREFA INICIAL BK'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
