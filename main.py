@@ -159,7 +159,7 @@ dds = (
         INNER join DW_Vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join DW_Vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_CR = Es.ID_Cr
         WHERE T.Nome LIKE '%Visita %'
-        AND Cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
+        AND Cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND DAY(T.TerminoReal) = {p.day}
         AND MONTH(T.TerminoReal) = {p.month}
         AND YEAR(T.TerminoReal) = {p.year}""")
@@ -172,7 +172,7 @@ dds = (
         INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR c WITH(NOLOCK) on c.Id_cr = Es.Id_cr
-        WHERE c.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
+        WHERE c.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND T.Nome LIKE '%Visita %' 
         AND R.Nome <> 'Sistema'
         AND month(TerminoReal) = {p.month}
@@ -187,7 +187,7 @@ dds = (
         FROM Tarefa T with(nolock)
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
+        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND T.Nome = 'Visita Oper. Liderança'
         AND MONTH(Disponibilizacao) = {p.month}
         AND YEAR(Disponibilizacao) = {p.year}
@@ -207,7 +207,7 @@ dds = (
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
         WHERE cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
-        AND cr.Gerente <> 'GLEISSON EVANGELISTA DE OLIVEI'
+        AND cr.Gerente <> 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND T.Nome = 'TAREFA INICIAL BK'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
@@ -223,7 +223,7 @@ dds = (
         INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
+        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND T.Nome = 'TAREFA INICIAL BK'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
@@ -365,7 +365,7 @@ fds = [
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
         WHERE cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
-        AND cr.Gerente <> 'GLEISSON EVANGELISTA DE OLIVEI'
+        AND cr.Gerente <> 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND T.Nome = 'TAREFA INICIAL BK'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
@@ -381,7 +381,7 @@ fds = [
         INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEI'
+        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND T.Nome = 'TAREFA INICIAL BK'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
