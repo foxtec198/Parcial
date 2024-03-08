@@ -364,8 +364,9 @@ fds = [
         INNER join Recurso R on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-        WHERE cr.GerenteRegional = 'DENISE DOS SANTOS DIAS SILVA'
-        AND cr.Gerente <> 'GLEISSON EVANGELISTA DE OLIVEIRA'
+        WHERE cr.Gerente IN (
+            'DENISE DOS SANTOS DIAS SILVA','CLAYTON MARTINS DAMASCENO'
+        )
         AND T.Nome = 'TAREFA INICIAL BK'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
