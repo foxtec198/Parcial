@@ -485,7 +485,7 @@ fds = [
 
 # Mensagem com __Horario_Exato__ e com Recorrencia
 r = {
-    '08:30': lambda: p.whats.enviar_msg(
+    '08:30:00': lambda: p.whats.enviar_msg(
         'Meu amor ❤❤❤', 
         '''Bom diaaaaa meu amor ❤
 Não se esqueça de pegar a aliança e tomar café ☕💍
