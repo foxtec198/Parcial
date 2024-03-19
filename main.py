@@ -377,7 +377,7 @@ dds = (
         and month(TerminoReal) = {p.month}
         and year(TerminoReal) = {p.year}
         GROUP BY R.Nome
-        ORDER BY COUTN(R.Nome) DESC""")
+        ORDER BY COUNT(R.Nome) DESC""")
     ),
     )
 
