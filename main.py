@@ -61,17 +61,20 @@ dds = (
     lambda: p.whats.enviar_msg(
         'GPS Vista - LDA & MGA', # VISITAS DIA
         f'Segue Visitas Realizadas Até o Momento - {p.now} 🌇🏦',
-        p.whats.criar_imagem_SQL(f"""SELECT R.Nome as 'Sup', Es.Nivel_03 as 'CR ', TerminoReal as 'Data de Finalização' 
+        p.whats.criar_imagem_SQL(f"""SELECT 
+        R.Nome as 'Sup', Es.Nivel_03 as 'CR ', 
+        TerminoReal as 'Data de Finalização' 
         FROM Tarefa T WITH(NOLOCK)
-        INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
-        INNER join DW_Vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
-        INNEr join DW_Vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_CR = Es.ID_Cr
-        WHERE T.Nome LIKE '%Visita %'
-        AND R.Nome <> 'Sistema'
-        AND cr.Gerente in(
+        INNER JOIN Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
+        INNER JOIN DW_Vista.dbo.DM_Estrutura Es WITH(NOLOCK) 
+            on Es.Id_Estrutura = T.EstruturaId
+        INNER JOIN DW_Vista.dbo.DM_CR cr WITH(NOLOCK) 
+            on cr.Id_CR = Es.ID_Cr
+        WHERE cr.Gerente in (
             'DENISE DOS SANTOS DIAS SILVA',                     
             'CLAYTON MARTINS DAMASCENO'
             )
+        AND T.Nome LIKE '%Visita %'
         AND DAY(T.TerminoReal) = {p.day}
         AND MONTH(T.TerminoReal) = {p.month}
         AND YEAR(T.TerminoReal) = {p.year}""")
@@ -122,7 +125,7 @@ dds = (
         INNER join DW_Vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join DW_Vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_CR = Es.ID_Cr
         WHERE T.Nome LIKE '%Visita %'
-        AND n.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
+        AND cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND DAY(T.TerminoReal) = {p.day}
         AND MONTH(T.TerminoReal) = {p.month}
         AND YEAR(T.TerminoReal) = {p.year}""")
@@ -135,7 +138,7 @@ dds = (
         INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR c WITH(NOLOCK) on c.Id_cr = Es.Id_cr
-        WHERE c.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
+        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND T.Nome LIKE '%Visita %' 
         AND R.Nome <> 'Sistema'
         AND month(TerminoReal) = {p.month}
@@ -300,8 +303,8 @@ dds = (
         ORDER BY [Realizado] DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'GRUPO GPS / BAYER ROLANDIA',
-        f'Entradas de Prestadores de Serviço ou Visitantes até {p.now}',
+        'GRUPO GPS / BAYER ROLANDIA', # BAYER PS
+        f'Entradas de *Prestadores de Serviço/Visitantes* até {p.now} 🚗🚘',
         p.whats.criar_imagem_SQL(f"""SELECT 
             Ex.Conteudo, 
             T.TerminoReal as 'Horario de Entrada'
@@ -315,8 +318,8 @@ dds = (
         AND YEAR(TerminoReal) = {p.year}""")
     ),
     lambda: p.whats.enviar_msg(
-        'GRUPO GPS / BAYER ROLANDIA',
-        f'Entradas de Colaboradores Bayer/Terceiros até {p.now}',
+        'GRUPO GPS / BAYER ROLANDIA', # BAYER BC
+        f'Entradas de *Colaboradores Bayer/Terceiros* até {p.now} 🚗🚘',
         p.whats.criar_imagem_SQL(f"""SELECT
             Es.Descricao, 
             T.TerminoReal as 'Horario de Entrada'
@@ -330,7 +333,34 @@ dds = (
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
         AND YEAR(TerminoReal) = {p.year}""")
-    )
+    ),
+    lambda: p.whats.enviar_msg(
+        'TST GPS - Regional Denise', # TST
+        f'Segue procedimentos de TST realizados até {p.now} 🔐⛑',
+        p.whats.criar_imagem_SQL(f"""SELECT DISTINCT
+        R.Nome,
+        COUNT(R.Nome) as 'Total de Visitas'
+        FROM Tarefa T
+        INNER JOIN Recurso R
+            on R.CodigoHash = T.FinalizadoPorHash
+        INNER JOIN dw_vista.dbo.DM_Estrutura Es
+            on Es.Id_Estrutura = T.EstruturaId
+        INNER JOIN dw_vista.dbo.DM_CR Cr
+            on Cr.ID_CR = Es.ID_CR 
+        WHERE CR.Gerente IN (
+            'denise dos santos dias silva',
+            'clayton martins damasceno'
+            )
+        and T.Nome IN (
+            'ATIVIDADES SEGURANÇA DO TRABALHO',
+            'AUDITORIA DE PROCEDIMENTOS SSMA'
+            )
+        AND DAY(TerminoReal) = {p.day}
+        AND MONTH(TerminoReal) = {p.month}
+        AND YEAR(TerminoReal) = {p.year}
+        GROUP BY R.Nome
+        ORDER BY COUNT(R.Nome) """)
+    ),
     )
 
 # Fim de Semana
