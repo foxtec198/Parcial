@@ -316,7 +316,7 @@ dds = (
     ),
     lambda: p.whats.enviar_msg(
         'GRUPO GPS / BAYER ROLANDIA',
-        f'Entradas de Prestadores de Serviço ou Visitantes até {p.now}',
+        f'Entradas de Colaboradores Bayer/Terceiros até {p.now}',
         p.whats.criar_imagem_SQL(f"""SELECT
             Es.Descricao, 
             T.TerminoReal as 'Horario de Entrada'
