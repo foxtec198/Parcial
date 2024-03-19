@@ -122,7 +122,7 @@ dds = (
         INNER join DW_Vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join DW_Vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_CR = Es.ID_Cr
         WHERE T.Nome LIKE '%Visita %'
-        AND Cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
+        AND n.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND DAY(T.TerminoReal) = {p.day}
         AND MONTH(T.TerminoReal) = {p.month}
         AND YEAR(T.TerminoReal) = {p.year}""")
@@ -302,7 +302,7 @@ dds = (
     lambda: p.whats.enviar_msg(
         'GRUPO GPS / BAYER ROLANDIA',
         f'Entradas de Prestadores de Serviço ou Visitantes até {p.now}',
-        f"""SELECT 
+        p.whats.criar_imagem_SQL(f"""SELECT 
             Ex.Conteudo, 
             T.TerminoReal as 'Horario de Entrada'
         FROM Tarefa T with(nolock)
@@ -312,12 +312,12 @@ dds = (
         AND Ex.PerguntaDescricao = 'NOME COMPLETO'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
-        AND YEAR(TerminoReal) = {p.year}"""
+        AND YEAR(TerminoReal) = {p.year}""")
     ),
     lambda: p.whats.enviar_msg(
         'GRUPO GPS / BAYER ROLANDIA',
         f'Entradas de Prestadores de Serviço ou Visitantes até {p.now}',
-        f"""SELECT
+        p.whats.criar_imagem_SQL(f"""SELECT
             Es.Descricao, 
             T.TerminoReal as 'Horario de Entrada'
         FROM Tarefa T with(nolock)
@@ -329,7 +329,7 @@ dds = (
         AND Ex.Conteudo = 'ENTRADA'
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
-        AND YEAR(TerminoReal) = {p.year}"""
+        AND YEAR(TerminoReal) = {p.year}""")
     )
     )
 
