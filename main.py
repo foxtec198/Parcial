@@ -68,7 +68,7 @@ dds = (
         INNEr join DW_Vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_CR = Es.ID_Cr
         WHERE T.Nome LIKE '%Visita %'
         AND R.Nome <> 'Sistema'
-        AND c.Gerente in(
+        AND cr.Gerente in(
             'DENISE DOS SANTOS DIAS SILVA',                     
             'CLAYTON MARTINS DAMASCENO'
             )
@@ -84,7 +84,7 @@ dds = (
         INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR c WITH(NOLOCK) on c.Id_cr = Es.Id_cr
-        WHERE c.Gerente IN (
+        WHERE cr.Gerente IN (
             'DENISE DOS SANTOS DIAS SILVA',                     
             'CLAYTON MARTINS DAMASCENO'
             ) 
@@ -101,7 +101,7 @@ dds = (
         FROM Tarefa T with(nolock)
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-        WHERE c.Gerente IN (
+        WHERE cr.Gerente IN (
             'DENISE DOS SANTOS DIAS SILVA',                     
             'CLAYTON MARTINS DAMASCENO'
             ) 
