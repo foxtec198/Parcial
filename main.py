@@ -361,6 +361,24 @@ dds = (
         GROUP BY R.Nome
         ORDER BY COUNT(R.Nome) """)
     ),
+    lambda: p.whats.enviar_msg(
+        'Superbac - Grupo GPS', # TST
+        f'Segue limpezas realizadas até {p.now} 🔐⛑',
+        p.whats.criar_imagem_SQL(f"""SELECT R.Nome, COUNT(R.Nome) as 'Total'
+        FROM Tarefa T
+        inner join Recurso R
+            on R.CodigoHash = T.FinalizadoPorHash
+        inner join DW_Vista.dbo.DM_ESTRUTURA Es
+            on Es.Id_Estrutura = T.EstruturaId
+        where Es.CRNo = 50724
+        and T.ChecklistId = 'd26f3ac6-45e9-4096-a49b-7e38a0e854ec'
+        and R.Nome NOT IN ('Sistema')
+        and day(TerminoReal) = {p.day}
+        and month(TerminoReal) = {p.month}
+        and year(TerminoReal) = {p.year}
+        GROUP BY R.Nome
+        ORDER BY COUTN(R.Nome) DESC""")
+    ),
     )
 
 # Fim de Semana
@@ -510,7 +528,7 @@ fds = [
 
 # Mensagem com __Horario_Exato__ e com Recorrencia
 r = {
-    '08:30:00': lambda: p.whats.enviar_msg(
+    '08:30:30': lambda: p.whats.enviar_msg(
         'Meu amor ❤❤❤', 
         '''Bom diaaaaa meu amor ❤
 Não se esqueça de pegar a aliança e tomar café ☕💍
