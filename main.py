@@ -59,7 +59,7 @@ dds = (
         ORDER BY T.[Status], [Total] DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'GPS Vista - LDA', # VISITAS DIA
+        'GPS Vista - LDA & MGA', # VISITAS DIA
         f'Segue Visitas Realizadas Até o Momento - {p.now} 🌇🏦',
         p.whats.criar_imagem_SQL(f"""SELECT R.Nome as 'Sup', Es.Nivel_03 as 'CR ', TerminoReal as 'Data de Finalização' 
         FROM Tarefa T WITH(NOLOCK)
@@ -68,20 +68,26 @@ dds = (
         INNEr join DW_Vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_CR = Es.ID_Cr
         WHERE T.Nome LIKE '%Visita %'
         AND R.Nome <> 'Sistema'
-        AND Cr.Gerente = 'CLAYTON MARTINS DAMASCENO'
+        AND c.Gerente in(
+            'DENISE DOS SANTOS DIAS SILVA',                     
+            'CLAYTON MARTINS DAMASCENO'
+            )
         AND DAY(T.TerminoReal) = {p.day}
         AND MONTH(T.TerminoReal) = {p.month}
         AND YEAR(T.TerminoReal) = {p.year}""")
     ),
     lambda: p.whats.enviar_msg(
-        'GPS Vista - LDA', # VISITAS MES
+        'GPS Vista - LDA & MGA ', # VISITAS MES
         'Segue Visitas Realizas neste Mês 📆',
         p.whats.criar_imagem_SQL(f"""SELECT R.Nome as Sup, COUNT(R.Nome)  as Realizado
         FROM Tarefa T WITH(NOLOCK)
         INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR c WITH(NOLOCK) on c.Id_cr = Es.Id_cr
-        WHERE c.Gerente = 'CLAYTON MARTINS DAMASCENO'
+        WHERE c.Gerente IN (
+            'DENISE DOS SANTOS DIAS SILVA',                     
+            'CLAYTON MARTINS DAMASCENO'
+            ) 
         AND T.Nome LIKE '%Visita %' 
         AND month(TerminoReal) = {p.month}
         AND YEAR(TerminoReal) = {p.year}
@@ -89,59 +95,16 @@ dds = (
         ORDER BY COUNT(R.Nome) DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'GPS Vista - LDA', # VISITAS ABERTAS
+        'GPS Vista - LDA & MGA', # VISITAS ABERTAS
         'Segue Visitas Operacionais *ABERTAS/INICIADAS NESTE MÊS!* 🚧',
         p.whats.criar_imagem_SQL(f"""SELECT Cliente, COUNT(Cliente) as 'Total'
         FROM Tarefa T with(nolock)
         INNER join dw_vista.dbo.DM_ESTRUTURA Es with(nolock) on Es.Id_estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR cr with(nolock) on cr.Id_cr = es.Id_cr
-        WHERE cr.Gerente = 'CLAYTON MARTINS DAMASCENO'
-        AND T.Nome = 'Visita Oper. Liderança'
-        AND MONTH(Disponibilizacao) = {p.month}
-        AND YEAR(Disponibilizacao) = {p.year}
-        AND T.Status >= 10
-        AND T.Status <= 25
-        GROUP BY Cliente
-        ORDER BY [Total] DESC""")
-    ),
-    lambda: p.whats.enviar_msg(
-        'GPS Vista - MGA', # VISITAS DIA
-        f'Segue Visitas Realizadas Até o Momento - {p.now} 🌇🏦',
-        p.whats.criar_imagem_SQL(f"""SELECT R.Nome as 'Sup', Es.Nivel_03 as 'CR ', TerminoReal as 'Data de Finalização' 
-        FROM Tarefa T WITH(NOLOCK)
-        INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
-        INNER join DW_Vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
-        INNER join DW_Vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_CR = Es.ID_Cr
-        WHERE T.Nome LIKE '%Visita %'
-        AND Cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
-        AND DAY(T.TerminoReal) = {p.day}
-        AND MONTH(T.TerminoReal) = {p.month}
-        AND YEAR(T.TerminoReal) = {p.year}""")
-    ),
-    lambda: p.whats.enviar_msg(
-        'GPS Vista - MGA', # VISITAS MES
-        'Segue Visitas Realizas neste Mês 📆',
-        p.whats.criar_imagem_SQL(f"""SELECT R.Nome as Sup, COUNT(R.Nome)  as Realizado
-        FROM Tarefa T WITH(NOLOCK)
-        INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
-        INNER join dw_vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
-        INNER join dw_vista.dbo.DM_CR c WITH(NOLOCK) on c.Id_cr = Es.Id_cr
-        WHERE c.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
-        AND T.Nome LIKE '%Visita %' 
-        AND R.Nome <> 'Sistema'
-        AND month(TerminoReal) = {p.month}
-        AND YEAR(TerminoReal) = {p.year}
-        GROUP BY R.Nome
-        ORDER BY COUNT(R.Nome) DESC""")
-    ),
-    lambda: p.whats.enviar_msg(
-        'GPS Vista - MGA', # VISITAS ABERTAS
-        'Segue Visitas Operacionais *ABERTAS/INICIADAS NESTE MÊS!* 🚧',
-        p.whats.criar_imagem_SQL(f"""SELECT Cliente, COUNT(Cliente) as 'Total'
-        FROM Tarefa T WITH(NOLOCK)
-        INNER join dw_vista.dbo.DM_ESTRUTURA Es WITH(NOLOCK) on Es.Id_estrutura = T.EstruturaId
-        INNER join dw_vista.dbo.DM_CR cr WITH(NOLOCK) on cr.Id_cr = es.Id_cr
-        WHERE cr.Gerente = 'DENISE DOS SANTOS DIAS SILVA'
+        WHERE c.Gerente IN (
+            'DENISE DOS SANTOS DIAS SILVA',                     
+            'CLAYTON MARTINS DAMASCENO'
+            ) 
         AND T.Nome = 'Visita Oper. Liderança'
         AND MONTH(Disponibilizacao) = {p.month}
         AND YEAR(Disponibilizacao) = {p.year}
@@ -336,6 +299,38 @@ dds = (
         GROUP by Es.Nivel_04
         ORDER BY [Realizado] DESC""")
     ),
+    lambda: p.whats.enviar_msg(
+        'GRUPO GPS / BAYER ROLANDIA',
+        f'Entradas de Prestadores de Serviço ou Visitantes até {p.now}',
+        f"""SELECT 
+            Ex.Conteudo, 
+            T.TerminoReal as 'Horario de Entrada'
+        FROM Tarefa T with(nolock)
+        inner join Execucao Ex with(nolock) 
+            on Ex.TarefaId = T.Id
+        WHERE T.EstruturaNivel2 LIKE '%42636 %'
+        AND Ex.PerguntaDescricao = 'NOME COMPLETO'
+        AND DAY(TerminoReal) = {p.day}
+        AND MONTH(TerminoReal) = {p.month}
+        AND YEAR(TerminoReal) = {p.year}"""
+    ),
+    lambda: p.whats.enviar_msg(
+        'GRUPO GPS / BAYER ROLANDIA',
+        f'Entradas de Prestadores de Serviço ou Visitantes até {p.now}',
+        f"""SELECT
+            Es.Descricao, 
+            T.TerminoReal as 'Horario de Entrada'
+        FROM Tarefa T with(nolock)
+        INNER JOIN Execucao EX
+            on Ex.TarefaId = T.Id
+        INNER JOIN Estrutura Es 
+            on Es.Id = T.EstruturaId
+        WHERE T.EstruturaNivel2 LIKE '%42636 %'
+        AND Ex.Conteudo = 'ENTRADA'
+        AND DAY(TerminoReal) = {p.day}
+        AND MONTH(TerminoReal) = {p.month}
+        AND YEAR(TerminoReal) = {p.year}"""
+    )
     )
 
 # Fim de Semana
