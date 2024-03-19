@@ -353,7 +353,8 @@ dds = (
             )
         and T.Nome IN (
             'ATIVIDADES SEGURANÇA DO TRABALHO',
-            'AUDITORIA DE PROCEDIMENTOS SSMA'
+            'AUDITORIA DE PROCEDIMENTOS SSMA',
+            'VISITAS TÉCNICA SSMA'
             )
         AND DAY(TerminoReal) = {p.day}
         AND MONTH(TerminoReal) = {p.month}
