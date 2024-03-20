@@ -82,12 +82,13 @@ dds = (
     lambda: p.whats.enviar_msg(
         'GPS Vista - LDA & MGA ', # VISITAS MES
         'Segue Visitas Realizas neste Mês 📆',
-        p.whats.criar_imagem_SQL(f"""SELECT R.Nome as Sup, COUNT(R.Nome)  as Realizado
+        p.whats.criar_imagem_SQL(f"""
+        SELECT R.Nome as Sup, COUNT(R.Nome)  as Realizado
         FROM Tarefa T WITH(NOLOCK)
         INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR c WITH(NOLOCK) on c.Id_cr = Es.Id_cr
-        WHERE cr.Gerente IN (
+        WHERE c.Gerente IN (
             'DENISE DOS SANTOS DIAS SILVA',                     
             'CLAYTON MARTINS DAMASCENO'
             ) 
@@ -138,7 +139,7 @@ dds = (
         INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
         INNER join dw_vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
         INNER join dw_vista.dbo.DM_CR c WITH(NOLOCK) on c.Id_cr = Es.Id_cr
-        WHERE cr.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
+        WHERE c.Gerente = 'GLEISSON EVANGELISTA DE OLIVEIRA'
         AND T.Nome LIKE '%Visita %' 
         AND R.Nome <> 'Sistema'
         AND month(TerminoReal) = {p.month}
