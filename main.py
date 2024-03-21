@@ -1,9 +1,7 @@
 from authWA import Parcial, conectar_email
 
-# p = Parcial('guilherme.breve', '8458Guilherme','10.56.6.56', 8, 23)
 p = Parcial('guilherme.breve', '84584608@Gui','10.56.6.56', 8, 23)
 conectar_email('foxtec198@gmail.com','vewmksduxchpjirg')
-master = []
 
 # Dias de Semana
 dds = (
@@ -541,6 +539,7 @@ Tih Amuhhh ❤❤'''
     )
 }
 
+master = []
 master.append(dds)
 master.append(fds)
 master.append(r)
