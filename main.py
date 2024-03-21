@@ -1,6 +1,5 @@
 from authWA import Parcial, conectar_email
 
-# p = Parcial('guilherme.breve', '84584608@Gui','34.138.244.89', 8, 23)
 p = Parcial('guilherme.breve', '84584608@Gui','10.56.6.56', 8, 23)
 conectar_email('foxtec198@gmail.com','vewmksduxchpjirg')
 
@@ -525,7 +524,6 @@ fds = [
         AND R.Nome <> 'Sistema'
         AND E.PerguntaDescricao = 'INFORMAR O MOTIVO NO CAMPO ABAIXO.'""")
     ),
-    
 ]
 
 # Mensagem com __Horario_Exato__ e com Recorrencia
