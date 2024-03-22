@@ -39,7 +39,7 @@ dds = (
         ORDER BY T.[Status], [Total] DESC""")
     ),
     lambda: p.whats.enviar_msg(
-        'Liderança GPS/FIEP', # FIEP JOSIEL
+        'Liderança GPS/FIEP', # FIEP PR OESTE
         f'Segue tarefas Realizadas/Abertas *FIEP* {p.now} 🧹🧼',
         p.whats.criar_imagem_SQL(f"""SELECT
         (CASE WHEN T.Status = 10 THEN 'ABERTA' ELSE
@@ -62,7 +62,7 @@ dds = (
         f'Segue Visitas Realizadas Até o Momento - {p.now} 🌇🏦',
         p.whats.criar_imagem_SQL(f"""SELECT 
         R.Nome as 'Sup', Es.Nivel_03 as 'CR ', 
-        TerminoReal as 'Data de Finalização' 
+        FORMAT(TerminoReal, 'HH:MM') as 'Data de Finalização' 
         FROM Tarefa T WITH(NOLOCK)
         INNER JOIN Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
         INNER JOIN DW_Vista.dbo.DM_Estrutura Es WITH(NOLOCK) 
@@ -119,7 +119,10 @@ dds = (
     lambda: p.whats.enviar_msg(
         'GPS Vista - FCP', # VISITAS DIA
         f'Segue Visitas Realizadas Até o Momento - {p.now} 🌇🏦',
-        p.whats.criar_imagem_SQL(f"""SELECT R.Nome as 'Sup', Es.Nivel_03 as 'CR ', TerminoReal as 'Data de Finalização' 
+        p.whats.criar_imagem_SQL(f"""SELECT 
+        R.Nome as 'Sup', 
+        Es.Nivel_03 as 'CR ',
+        FORMAT(TerminoReal, 'HH:MM') as 'Data de Finalização'
         FROM Tarefa T WITH(NOLOCK)
         INNER join Recurso R WITH(NOLOCK) on R.CodigoHash = T.FinalizadoPorHash
         INNER join DW_Vista.dbo.DM_Estrutura Es WITH(NOLOCK) on Es.Id_Estrutura = T.EstruturaId
