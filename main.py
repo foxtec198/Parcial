@@ -58,6 +58,24 @@ dds = (
         ORDER BY T.[Status], [Total] DESC""")
     ),
     lambda: p.whats.enviar_msg(
+        'SANCOR MGA', # VISITAS DIA
+        f'Segue inspeções realizadas até o momento - {p.now} 🧹🧼',
+        p.whats.criar_imagem_SQL(f"""
+        SELECT R.Nome,
+        (CASE WHEN T.Status = 10 THEN 'ABERTA' ELSE
+        (CASE WHEN T.Status = 85 THEN 'FINALIZADA' ELSE
+        (CASE WHEN T.Status = 25 THEN 'INICIADA' END) END) END) as 'Status',
+        COUNT(T.Nome) as 'Total'
+        FROM Tarefa T
+        INNER JOIN Recurso R
+            on R.CodigoHash = T.ModificadoPorHash
+        WHERE T.EstruturaNivel2 LIKE '%49754 %'
+        AND DAY(T.Disponibilizacao) = {p.day}
+        AND MONTH(T.Disponibilizacao) = {p.month}
+        AND YEAR(T.Disponibilizacao) = {p.year}
+        GROUP BY R.Nome, T.Status""")
+    ),
+    lambda: p.whats.enviar_msg(
         'GPS Vista - LDA & MGA', # VISITAS DIA
         f'Segue Visitas Realizadas Até o Momento - {p.now} 🌇🏦',
         p.whats.criar_imagem_SQL(f"""SELECT 
