@@ -17,6 +17,6 @@ while True:
     if dia == diaDeEnvio + 1 and not mat: mat = True
     else:
         system('cls')
-        print('Aguardando para enviar email...')
+        print(f'Aguardando para enviar email... - Status DB: {r.status}')
         sleep(1)
 
