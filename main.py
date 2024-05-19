@@ -18,7 +18,6 @@ dds = (
         ORDER BY cr.Gerente, [Escalonadas] DESC""", conn)
     ),
 )
-
 fds = [
     lambda: p.whats.enviar_msg(
         'Notas',
