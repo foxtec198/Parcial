@@ -5,7 +5,7 @@ conn = p.engine.connect()
 
 dds = (
     lambda: p.whats.enviar_msg(
-        'Guilherme',#'GPS Vista - PR - Regional Denise', # Escalonadas
+        'GPS Vista - PR - Regional Denise', # Escalonadas
         f'Aqui estão as *ATIVIDADES ESCALONADAS* do app GPS Vista, na gestão Denise \n DATA {p.date} - {p.time}',
         p.whats.criar_imagem_SQL("""SELECT cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
         FROM Tarefa T WITH(NOLOCK)
@@ -20,7 +20,7 @@ dds = (
 )
 fds = [
     lambda: p.whats.enviar_msg(
-        'Notas',
+        'GPS Vista - PR - Regional Denise', # Escalonadas
         f'Aqui estão as *ATIVIDADES ESCALONADAS* do app GPS Vista, na gestão Denise \n DATA {p.date} - {p.time}',
         p.whats.criar_imagem_SQL("""SELECT cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
         FROM Tarefa T WITH(NOLOCK)
