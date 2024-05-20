@@ -6,7 +6,7 @@ conn = p.engine.connect()
 dds = (
     lambda: p.whats.enviar_msg(
         'GPS Vista - PR - Regional Denise', # Escalonadas
-        f'Aqui estão as *ATIVIDADES ESCALONADAS* do app GPS Vista, na gestão Denise \n DATA {p.date} - {p.time}',
+        f'Aqui estão as *ATIVIDADES ESCALONADAS* do app GPS Vista, na gestão Denise. \n\n DATA: {p.date} - {p.time}',
         p.whats.criar_imagem_SQL("""SELECT cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
         FROM Tarefa T WITH(NOLOCK)
         INNER join dw_vista.dbo.DM_ESTRUTURA Es WITH(NOLOCK) on Es.Id_estrutura = T.EstruturaId
@@ -21,7 +21,7 @@ dds = (
 fds = [
     lambda: p.whats.enviar_msg(
         'GPS Vista - PR - Regional Denise', # Escalonadas
-        f'Aqui estão as *ATIVIDADES ESCALONADAS* do app GPS Vista, na gestão Denise \n DATA {p.date} - {p.time}',
+        f'Aqui estão as *ATIVIDADES ESCALONADAS* do app GPS Vista, na gestão Denise. \n\n DATA: {p.date} - {p.time}',
         p.whats.criar_imagem_SQL("""SELECT cr.Gerente, Es.Nivel_03 as 'CR', count(cr.Gerente) as 'Escalonadas'
         FROM Tarefa T WITH(NOLOCK)
         INNER join dw_vista.dbo.DM_ESTRUTURA Es WITH(NOLOCK) on Es.Id_estrutura = T.EstruturaId
