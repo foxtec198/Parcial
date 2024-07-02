@@ -1,6 +1,6 @@
 from authWA import Parcial
 
-p = Parcial('guilherme.breve','84584608-Gui','10.56.6.56','Vista_Replication_PRD')
+p = Parcial('guilherme.breve','8458@Guilherme198','10.56.6.56','Vista_Replication_PRD')
 
 dds = (
     lambda: p.whats.enviar_msg(
