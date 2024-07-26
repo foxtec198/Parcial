@@ -31,7 +31,8 @@ dds = (
         WHERE CR.Gerente IN (
             'DENISE DOS SANTOS DIAS SILVA',
             'DANIEL ALVES DE OLIVEIRA',
-            'CLAYTON MARTINS DAMASCENO'
+            'CLAYTON MARTINS DAMASCENO',
+            'ELTON TOBIAS'
         )
         AND T.ChecklistId in (
             '7c7d1611-01f5-4f6a-9652-4e24bb1ce07a',
